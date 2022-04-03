@@ -1,0 +1,35 @@
+  
+//Question - https://leetcode.com/problems/next-permutation/
+//Answer in CPP
+
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int index=0 ,found=0;
+        
+        for(int i=nums.size()-1;i>0;i--){
+            if(nums[i-1]<nums[i]){
+                index = i-1;
+                found=1;
+                break;
+            }
+        }
+        if(index==0 && found==0){
+            sort(nums.begin(), nums.end());
+        } else{
+            
+            for(int i=nums.size()-1;i>index;i--){
+                if(nums[i]>nums[index]){
+                    int val = nums[i];
+                    nums[i] = nums[index];
+                    nums[index] = val;
+                    if(index+1<nums.size()-1){
+                       sort(nums.begin()+index+1, nums.end());
+                    }
+                    
+                        break;
+                }
+            }
+        }
+    }
+};

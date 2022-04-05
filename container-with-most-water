@@ -1,0 +1,24 @@
+//Question - https://leetcode.com/problems/container-with-most-water/
+//Answer in cpp with best complexity O(n)
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int i=0;
+        int len = height.size()-1;
+        int maxVal=INT_MIN;
+        
+        while(i<len){
+            int minVal = (min(height[i],height[len]))*(len-i);
+            maxVal = max(minVal,maxVal);
+            
+            if(height[i]<height[len]){
+                i++;
+            } else{
+                len--;
+            }
+        }
+        
+        return maxVal;
+    }
+};

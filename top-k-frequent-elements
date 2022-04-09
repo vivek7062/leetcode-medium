@@ -1,0 +1,71 @@
+//Question - https://leetcode.com/problems/top-k-frequent-elements/
+//Answer in cpp
+
+
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+         map<int, int> ans;
+        int count =1;
+        sort(nums.begin(),nums.end());
+        
+        if(nums.size()==1){
+            return nums;
+        }
+        
+        for(int i=0;i<nums.size()-1;i++){
+            if(nums[i]==nums[i+1]){
+                count++;
+            } else{
+                    ans[nums[i]]=count;
+                    count=1;
+            }
+           if(nums.size()-1==i+1){
+                    ans[nums[i+1]]=count;
+                } 
+        }
+        
+        
+        
+        return sort_map_on_value(ans,k);
+    }
+    
+    vector<int> sort_map_on_value(map<int, int> mymap,int k)
+    {
+    auto comp = [](pair<int, int> a, pair<int, int> b) {
+        //comparison logic
+        //if value is greater for the first element 
+        //no need to swap
+        if (a.second > b.second)
+            return false;
+        //if value is less for the first element 
+        //need to swap
+        else if (a.second < b.second)
+            return true;
+        else { // when values are same
+            if (a.first < b.first) {
+                return false;
+            }
+            else
+                return true;
+        }
+    };
+
+    priority_queue<pair<int, int>, vector<pair<int, int> >, decltype(comp)> pq(comp);
+
+    for (auto& ij : mymap) {
+        pq.push(ij);
+    }
+    //printing the sorted map
+    vector<int> ans;
+    while (!pq.empty()) {
+        ans.push_back(pq.top().first);
+        k--;
+        pq.pop();
+        if(k==0){
+            break;
+        }
+    }
+        return ans;
+}
+};

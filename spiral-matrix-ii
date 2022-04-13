@@ -1,0 +1,58 @@
+//Question - https://leetcode.com/problems/spiral-matrix-ii/
+//Answer in cpp
+
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> ans(n, std::vector<int>(n, 1));
+        int minRow = 0,maxRow= n-1;
+        int minCol = 0, maxCol= n-1;
+        int totalRound = n/2;
+        int count=1;
+        if(n%2!=0){
+            totalRound+=1;
+        }
+        
+        if(n==1){
+            return ans;
+        }
+        
+        for(int i=0;i<totalRound;i++){
+            
+            for(minCol=minCol;minCol<=maxCol;minCol++){
+                ans[minRow][minCol] = count;
+                count++;
+            }
+            minCol--;
+            minRow++;
+            
+            for(minRow=minRow;minRow<=maxRow;minRow++){
+                ans[minRow][minCol] = count;
+                count++;
+            }
+            minRow--;
+            minCol--;
+            
+            for(minCol=minCol;minCol>=i;minCol--){
+                 ans[minRow][minCol] = count;
+                 count++;
+            }
+            minCol++;
+            minRow--;
+            
+            for(minRow=minRow;minRow>i;minRow--){
+                ans[minRow][minCol] = count;
+                count++;
+            }
+            minRow++;
+            minCol++;
+            
+            maxRow--;
+            maxCol--;
+            
+        }
+        
+        
+        return ans;
+    }
+};

@@ -13,24 +13,18 @@
  * };
  */
 class Solution {
-    int max=INT_MIN;
+  
 public:
     
     bool isValidBST(TreeNode *root)
     {
         bool ans=true;
-        vector<int> temp,temp1;
+        vector<int> temp;
         check(root,temp);
-        temp1=temp;
-        sort(temp.begin(), temp.end());
-        if(temp!=temp1){
-            ans=false;
-        }
         if(ans==true){
            for(int i=0;i<temp.size()-1;i++){
-            if(temp[i]==temp[i+1]){
-                ans=false;
-                break;
+            if(temp[i]>=temp[i+1]){
+                return false;
             }
         } 
         }

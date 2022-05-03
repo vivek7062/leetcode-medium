@@ -1,0 +1,30 @@
+//Question -> https://leetcode.com/problems/shortest-unsorted-continuous-subarray/
+//Answer in cpp
+
+
+class Solution {
+public:
+    int findUnsortedSubarray(vector<int>& nums) {
+        vector<int> temp = nums;
+        sort(temp.begin(),temp.end());
+        int ans =0;
+        int i=0,j=nums.size()-1;
+        while(i<j){
+            if(temp[i]==nums[i]){
+                i++;
+            } 
+            if(temp[j]==nums[j]){
+                j--;
+                continue;
+            }
+            
+            if(temp[i]!=nums[i] && temp[j]!=nums[j]){
+                ans = j-i+1;
+                break;
+            }
+            
+        }
+        
+        return ans;
+    }
+};

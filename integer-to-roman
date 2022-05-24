@@ -1,0 +1,93 @@
+//Question - https://leetcode.com/problems/integer-to-roman/
+//Answer in cpp
+
+class Solution {
+public:
+    string intToRoman(int num) {
+        string ans;
+        vector<int> split;
+        int count =0;
+        while(num){
+            split.push_back((num%10)*(pow(10,count)));
+            num=num/10;
+            count++;
+        }
+        
+        for(int j=split.size()-1;j>=0;j--){
+            cout<<split[j]<<endl;
+            if(split[j]>=1000){
+                for(int i=0;i<split[j]/1000;i++){
+                    ans= ans+"M";
+                }
+            } else if(split[j]>=500){
+                if(split[j]==900){
+                    ans= ans+"CM";
+                } else if(split[j]==500)
+                {
+                    ans= ans+"D";
+                }else{
+                    ans= ans+"D";
+                    for(int i=0;i<(split[j]-500)/100;i++){
+                    ans= ans+"C";
+                    }
+                }
+            }else if(split[j]>=100){
+                if(split[j]==400){
+                    ans= ans+"CD";
+                } else if(split[j]==100){
+                    ans= ans+"C";
+                } else{
+                    for(int i=0;i<(split[j])/100;i++){
+                    ans= ans+"C";
+                    }
+                }
+            }else if(split[j]>=50){
+                 if(split[j]==90){
+                    ans= ans+"XC";
+                } else if(split[j]==50){
+                    ans= ans+"L";
+                } else{
+                    ans= ans+"L";
+                    for(int i=0;i<(split[j]-50)/10;i++){
+                    ans= ans+"X";
+                    }
+                }
+                
+            }else if(split[j]>=10){
+                if(split[j]==40){
+                    ans= ans+"XL";
+                } else if(split[j]==10){
+                    ans= ans+"X";
+                } else{
+                    for(int i=0;i<(split[j])/10;i++){
+                    ans= ans+"X";
+                    }
+                }
+                
+            }else if(split[j]>=5){
+                if(split[j]==9){
+                    ans= ans+"IX";
+                } else if(split[j]==5){
+                    ans= ans+"V";
+                } else{
+                    ans= ans+"V";
+                     for(int i=0;i<(split[j]-5);i++){
+                    ans= ans+"I";
+                    }
+                }
+                
+            }else if(split[j]>=1){
+                if(split[j]==4){
+                    ans= ans+"IV";
+                } else if(split[j]==1){
+                    ans= ans+"I";
+                } else{
+                     for(int i=1;i<=(split[j]);i++){
+                    ans= ans+"I";
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};

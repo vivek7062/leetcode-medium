@@ -1,0 +1,22 @@
+//Question - https://leetcode.com/problems/longest-increasing-subsequence/
+//Answer in cpp
+
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int> vect(nums.size(), 1); 
+        int ans = 0; 
+        for(int i=1; i<nums.size(); i++){
+            for(int j=0; j<i; j++){
+                if(nums[i]>nums[j] && vect[i]<=vect[j]){
+                    vect[i] = 1+vect[j]; 
+                    if(vect[i]>ans){
+                        ans=vect[i]; 
+                    }
+                }
+            }
+        }
+        
+        return std::max(ans,1); 
+    }
+};

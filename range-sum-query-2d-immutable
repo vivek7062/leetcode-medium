@@ -1,0 +1,42 @@
+//Question - https://leetcode.com/problems/range-sum-query-2d-immutable/
+//Answer in cpp
+
+class NumMatrix {
+    vector<vector<int>> array;
+public:
+    NumMatrix(vector<vector<int>>& matrix) {
+        array = matrix;
+        int ans=0;
+        
+        cout<<array.size()<<" "<<array[0].size()<<endl;
+        for(int i=0;i<array.size();i++){
+            for(int j=0;j<array[0].size();j++){
+                ans=ans+array[i][j];
+                array[i][j]=ans;
+                cout<<ans<<endl;
+            }
+        }
+    }
+    
+    int sumRegion(int row1, int col1, int row2, int col2) {
+        int ans=0;
+        
+        for(int i=row1;i<=row2;i++){
+            int prev =0;
+            if(col1>0){
+                prev=array[i][col1-1];
+            } else if(i>0){
+                prev=array[i-1][array[0].size()-1];
+            }
+            
+            ans = ans + (array[i][col2]-prev) ;
+        }
+        return ans;
+    }
+};
+
+/**
+https://assets.leetcode.com/uploads/2021/03/14/sum-grid.jpg * Your NumMatrix object will be instantiated and called as such:
+ * NumMatrix* obj = new NumMatrix(matrix);
+ * inthttps://assets.leetcode.com/uploads/2021/03/14/sum-grid.jpg param_1 = obj->sumRegion(row1,col1,row2,col2);
+ */

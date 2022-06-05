@@ -1,0 +1,24 @@
+// Question - https://leetcode.com/problems/subsets/
+// Answer in cpp
+
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> temp;
+        findSubSet(nums,0, temp, ans);
+        return ans;
+        
+    }
+    
+    void findSubSet(vector<int>& nums,int i, vector<int> curr, vector<vector<int>> &ans){
+        if(i==nums.size()){
+            ans.push_back(curr);
+            return ;
+        }
+        vector<int> temp = curr;
+        temp.push_back(nums[i]);
+        findSubSet(nums, i+1 , temp,ans);
+        findSubSet(nums, i+1 , curr,ans);
+    }
+};

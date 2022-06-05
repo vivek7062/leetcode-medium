@@ -1,0 +1,36 @@
+//Question - https://leetcode.com/problems/permutations/
+//Answer in cpp
+
+
+
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        calculatePer(ans,0,nums.size()-1, nums);
+        
+        return ans;
+    }
+    
+    void calculatePer(vector<vector<int>> & ans, int l, int r,vector<int> nums){
+        if(l==r){
+           ans.push_back(nums);
+            return ;
+        }
+        
+        for(int i=l; i<=r;i++){
+            nums = swap(nums,i,l);
+            calculatePer(ans,l+1,r,nums);
+            nums = swap(nums,i,l);
+        }
+        
+    }
+    
+    vector<int> swap(vector<int> nums,int f,int l){
+        int temp;
+        temp = nums[f];
+        nums[f]=nums[l];
+        nums[l]= temp;
+        return nums;
+    }
+};

@@ -1,0 +1,33 @@
+// Question - https://leetcode.com/problems/maximum-erasure-value/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    int maximumUniqueSubarray(vector<int>& nums) {
+        int ans=0,sum=0,left=0,right=0,val=0,len=nums.size();
+        set<int> temp;
+        
+        while(right<len){
+            val = nums[right];
+            if(temp.find(val)==temp.end()){
+                temp.insert(val);
+                right++;
+                sum+=val;
+                ans= max(sum,ans);
+            } else{
+                while(nums[left]!=val){
+                    sum-=nums[left];
+                    temp.erase(temp.find(nums[left]));
+                    left++;
+                }
+                sum-=nums[left];
+                    temp.erase(temp.find(nums[left]));
+                    left++;
+            }
+        }
+        
+        return ans;
+    }
+};

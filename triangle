@@ -1,0 +1,56 @@
+//Question  - https://leetcode.com/problems/triangle/
+//Answer in cpp
+
+
+
+1.  By using top to bottom Approach Add each number with just above number if number is corner then just add above corner number otherwise add min of above 2 number 
+
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int ans=INT_MAX,len=triangle.size();
+        if(len==1) return triangle[0][0];
+        for(int i=1;i<len;i++){
+            for(int j=0;j<=i;j++){
+                if(j==0){
+                    triangle[i][j] += triangle[i-1][j];
+                } else if(j==i){
+                    triangle[i][j] += triangle[i-1][j-1];
+                } else{
+                    triangle[i][j] += min(triangle[i-1][j-1],triangle[i-1][j]);
+                }
+                if(i==len-1){
+                    ans= min(ans,triangle[i][j]);
+                }
+            }
+        }
+        return ans;
+    }
+    
+   
+};
+
+
+
+
+2. By Using Dynamic Programing || But this Will Give you **TLE**
+
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int ans=INT_MAX,index=0;
+        findMin(triangle,0,0,0,ans);
+        return ans;
+    }
+    
+    void findMin(vector<vector<int>> &temp,int i,int j,int sum,int &ans){
+        if(i==temp.size()-1){
+            sum+= temp[i][j];
+            ans = min(ans,sum);
+            return ;
+        }
+        sum+= temp[i][j];
+        findMin(temp,i+1,j,sum,ans);
+        findMin(temp,i+1,j+1,sum,ans);
+    }
+};

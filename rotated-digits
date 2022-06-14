@@ -1,0 +1,32 @@
+// Question - https://leetcode.com/problems/rotated-digits/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    
+    bool checkGood(int n){
+        int count=0,total=0,mod=0;
+        
+        while(n){
+            total++;
+            mod=n%10;
+            if(mod==3 || mod==4 || mod==7) return false;
+            if(mod==0 || mod==1 || mod==8) count++;
+            n=n/10;
+        }
+        
+        return count!=total;
+    }
+    
+    
+    int rotatedDigits(int n) {
+        int ans=0;
+        for(int i=1;i<=n;i++){
+            if(checkGood(i)) ans++;
+        }
+        
+        return ans;
+    }
+};

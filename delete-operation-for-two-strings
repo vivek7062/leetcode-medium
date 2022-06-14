@@ -1,0 +1,43 @@
+// Question - https://leetcode.com/problems/delete-operation-for-two-strings/
+// Answer in cpp
+
+
+
+
+class Solution {
+public:
+    int minDistance(string word1, string word2) {
+        int ans=0;
+        vector<vector<int>> vec(word1.size()+1,vector(word2.size()+1,-1));
+        for(int i=0;i<=word1.size();i++){
+               vec[i][0]=0;
+        }
+        for(int j=0;j<=word2.size();j++){
+             vec[0][j]=0;
+        }
+        
+        ans = getLongestSub(word1,word2,word1.size(),word2.size(),vec);
+        
+        
+        
+        return word1.size()+word2.size()-2*ans;
+    }
+    int getLongestSub(string w1 , string w2,int i,int j,vector<vector<int>> &arr){
+        if(i==0 || j==0){
+            return 0;
+        }
+        
+        if(arr[i][j]!=-1){
+            return arr[i][j];
+        }
+        
+        if(w1[i-1]==w2[j-1]){
+            arr[i][j]=1+getLongestSub(w1,w2,i-1,j-1,arr);
+            return arr[i][j];
+            
+        } 
+        
+        return arr[i][j]=max(getLongestSub(w1,w2,i-1,j,arr),getLongestSub(w1,w2,i,j-1,arr));
+        
+    }
+};

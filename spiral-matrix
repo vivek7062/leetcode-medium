@@ -1,0 +1,56 @@
+// Question - https://leetcode.com/problems/spiral-matrix/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> ans;
+        int maxRow = matrix.size(),maxCol = matrix[0].size(),iniRow=0,iniCol=0;
+        int rounds = maxRow&1==1?((maxRow+1)/2):(maxRow/2);
+        int f1=0,f2=0,f3=0,f4=0;
+        
+        for(int i=0;i<rounds;i++){
+            iniCol=i;
+            iniRow=i;
+            f1=0;f2=0;f3=0;f4=0;
+            for(iniCol=iniCol;iniCol<maxCol;iniCol++){
+                ans.push_back(matrix[iniRow][iniCol]);
+                f1=1;
+            }
+            iniRow++;
+            if(f1) {
+                iniCol--;
+            } else break;
+            for(iniRow=iniRow;iniRow<maxRow;iniRow++){
+                ans.push_back(matrix[iniRow][iniCol]);
+                f2=1;
+            }
+            if(f2) {
+                iniRow--;
+            } else break;
+            iniCol--;
+            for(iniCol=iniCol;iniCol>=i;iniCol--){
+                ans.push_back(matrix[iniRow][iniCol]);
+                f3=1;
+            }
+            if(f3) {
+                iniCol++;
+            } else break;
+            iniRow--;
+            for(iniRow=iniRow;iniRow>i;iniRow--){
+                ans.push_back(matrix[iniRow][iniCol]);
+                f4=1;
+            }
+            if(f4) {
+                iniRow++;
+            } else break;
+            maxRow--;
+            maxCol--;
+        }
+        
+        
+        return ans;
+    }
+};

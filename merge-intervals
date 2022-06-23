@@ -1,0 +1,24 @@
+// Question - https://leetcode.com/problems/merge-intervals/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>> ans;
+        int len = intervals.size();
+        int pointer=0;
+        sort(intervals.begin(),intervals.end());
+        ans.push_back(intervals[0]);
+        for(int i=1;i<len;i++){
+           if(ans[pointer][1]>=intervals[i][0]){
+               ans[pointer][1] = max(ans[pointer][1],intervals[i][1]);
+           } else{
+               ans.push_back(intervals[i]);
+               pointer++;
+           }
+        }
+        
+        return ans;
+    }
+};

@@ -1,0 +1,26 @@
+// Question - https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int maxScore(vector<int>& cardPoints, int k) {
+        long totalSum = accumulate(cardPoints.begin(),cardPoints.end(),0);
+        int target = cardPoints.size()-k,count=0;
+        int tempSum=0,minVal=INT_MAX,j=0;
+        for(int i=0;i<cardPoints.size();i++){
+            tempSum+=cardPoints[i];
+            count++;
+            if(count>target){
+                 tempSum-=cardPoints[j];
+                 count--;
+                 j++;
+            }
+            
+            if(target==count){
+                minVal = min(minVal,tempSum);
+            }
+        }
+        return totalSum-minVal;
+    }
+};

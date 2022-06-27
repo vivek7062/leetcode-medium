@@ -1,0 +1,27 @@
+//Question - https://leetcode.com/problems/sort-colors/
+//Answer in cpp
+
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int first=0,second=0,last=nums.size()-1,temp=0;
+        while(second<=last){
+            if(nums[second]==0){
+                temp=nums[first];
+                nums[first] = nums[second];
+                nums[second] = temp;
+                first++;
+                second++;
+            } else if(nums[second]==2){
+                temp=nums[second];
+                nums[second] = nums[last];
+                nums[last] = temp;
+                last--;
+            } else{
+                second++;
+            } 
+        }
+        
+    }
+};

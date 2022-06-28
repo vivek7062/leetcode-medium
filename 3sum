@@ -1,0 +1,40 @@
+// Question - https://leetcode.com/problems/3sum/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> ans;
+        if(nums.size()<3){
+            return ans;
+        }
+        int temp,l,r;
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<nums.size()-2;i++){
+            if(i==0 || nums[i-1]!=nums[i]){
+                temp = 0-nums[i];
+            l=i+1;
+            r=nums.size()-1;
+            vector<int> t;
+            while(l<r){
+                if(nums[l]+nums[r]==temp){
+                    ans.push_back({-temp,nums[l],nums[r]});
+                    while(l<r && nums[i]==nums[l+1]) l++;
+                    while(l<r && nums[r]==nums[r-1]) r--;
+                    l++;
+                    r--;
+                } else if(nums[l]+nums[r]<temp){
+                    l++;
+                } else{
+                    r--;
+                }
+            }
+            }
+        }
+            
+        return ans;
+        
+    }
+};

@@ -1,0 +1,31 @@
+// Question - https://leetcode.com/problems/minimum-deletions-to-make-character-frequencies-unique/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int minDeletions(string s) {
+        int ans=0,temp1,temp2;
+        priority_queue<int> pq;
+        unordered_map<int,int> mp;
+        
+        for(char ch:s){
+            mp[ch-'a']++;
+        }
+        
+        for(auto m : mp){
+            pq.push(m.second);
+        }
+        
+        while(pq.size()>1 && pq.top()!=0){
+            temp1= pq.top();
+            pq.pop();
+            temp2 = pq.top();
+            if(temp1==temp2){
+                pq.push(temp1-1);
+                ans++;
+            }
+        }
+        return ans;
+    }
+};

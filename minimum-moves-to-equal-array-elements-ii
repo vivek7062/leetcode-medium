@@ -1,0 +1,19 @@
+// Question - https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int minMoves2(vector<int>& nums) {
+        if(nums.size()<=1) return 0;
+        long ans=0;
+        sort(nums.begin(),nums.end());
+        int mid=nums[nums.size()/2],left=0,right=nums.size()-1;
+        while(left<right){
+            ans+= abs(mid-nums[left])+abs(mid-nums[right]);
+            left++;
+            right--;
+        }
+        return ans;
+    }
+};

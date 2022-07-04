@@ -1,0 +1,40 @@
+// Question - https://leetcode.com/problems/longest-palindromic-substring/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    string longestPalindrome(string s) {
+       int maxlength =1;
+       int start=0,l,r,len=s.size();
+        
+        for(int i=1;i<s.size();i++){
+            
+            l=i-1;
+            r=i;
+            
+           while((l>=0 && r<len) && s[l]==s[r] ){
+                if(r-l+1 >maxlength){
+                    maxlength = r-l+1;
+                    start=l;
+                }
+                l--;
+                r++;
+            }
+            l=i-1;
+            r=i+1;
+            
+            while((l>=0 && r<len) && s[l]==s[r] ){
+                if(r-l+1 >maxlength){
+                    maxlength = r-l+1;
+                    start=l;
+                }
+                l--;
+                r++;
+            }
+    
+        }
+        return s.substr(start,maxlength);
+    }
+};

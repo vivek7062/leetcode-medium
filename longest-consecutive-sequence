@@ -1,0 +1,33 @@
+// Question - https://leetcode.com/problems/longest-consecutive-sequence/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        int ans,count=1,curr;
+        priority_queue<int> pq;
+        for(int i:nums){
+            pq.push(i);
+        }
+        
+        
+        if(pq.size()<=1) return pq.size();
+        curr=pq.top();
+        pq.pop();
+        while(pq.size()){
+            if(pq.top()==curr-1 || pq.top()==curr){
+                if(pq.top()==curr-1){
+                    count++;
+                }
+            } else{
+                count=1;
+                if(ans>=pq.size()) break;
+            }
+             ans = max(ans,count);
+             curr = pq.top(); 
+             pq.pop();   
+        }
+        return ans;
+    }
+};

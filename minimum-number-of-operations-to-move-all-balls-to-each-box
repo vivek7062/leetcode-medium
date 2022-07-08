@@ -1,0 +1,66 @@
+// Question - https://leetcode.com/problems/minimum-number-of-operations-to-move-all-balls-to-each-box/
+// Answer in cpp
+
+
+
+Lets take an example ->
+Ex. 0 0 1 0 1 1
+Need to count 1 and add count in each step
+leftCount=0
+leftStep= 0
+
+step 1. for i=0
+  leftStep = leftStep+ leftCount=0;  => 0
+  i=1
+ leftStep = leftStep+ leftCount=0;  => 0 0
+ i=2
+  leftStep = leftStep+ leftCount=0;  => 0 0 0
+  leftCount++ (if we found 1 ) => 1
+  i=3
+  leftStep = leftStep+ leftCount=1;  => 0 0 0 1
+    i=4
+  leftStep = leftStep+ leftCount=2;  => 0 0 0 1 2
+  eftCount++ (if we found 1 ) => 2
+   i=5
+  leftStep = leftStep+ leftCount=2;  => 0 0 0 1 2 4
+  eftCount++ (if we found 1 ) => 3
+  
+  left = 0 0 0 1 2 4
+  Similer we will calculate right to left
+  right = 11 8 5 3 1 0
+  
+  ans = left + right = 11 , 8 5 4 3 4 
+  
+class Solution {
+public:
+    vector<int> minOperations(string boxes) {
+        vector<int> left , right(boxes.size(),0);
+        int leftDiff = 0,rightDiff=0,leftNext=0,rightNext=0,last=boxes.size()-1; 
+        
+        for(int i=0;i<boxes.size();i++,last--){
+            leftNext= leftNext+leftDiff;
+            rightNext= rightNext +rightDiff;
+            if(boxes[i]=='1'){
+                leftDiff++;
+            }
+            
+            if(boxes[last]=='1'){
+                rightDiff++;
+            }
+            left.push_back(leftNext);
+            right[last] = rightNext;
+            
+            if(last<=i){
+               left[last] = left[last]+right[last];
+                if(last!=i){
+                    left[i] = left[i]+right[i];
+                }
+                
+            }
+           
+        }
+        
+        
+        return left;
+    }
+};

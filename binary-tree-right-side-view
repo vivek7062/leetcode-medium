@@ -1,0 +1,19 @@
+// Question - https://leetcode.com/problems/binary-tree-right-side-view/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int> ans;
+        rightTree(root,ans,0);
+        return ans;
+    }
+    
+    void rightTree(TreeNode* root,vector<int> &ans , int order){
+        if(!root) return ;
+        if(order>=ans.size()) ans.push_back(root->val);
+        rightTree(root->right,ans,order+1);
+        rightTree(root->left,ans,order+1);
+    }
+};

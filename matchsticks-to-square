@@ -1,0 +1,41 @@
+// Question - https://leetcode.com/problems/matchsticks-to-square/
+// Answer in cpp
+
+
+class Solution {
+public:
+    bool makesquare(vector<int>& matchsticks) {
+        if(matchsticks.size()<4) return false;
+        int size = accumulate(matchsticks.begin(),matchsticks.end(),0);
+        if(size%4!=0) return false;
+        size = size/4;
+        vector<int> sides(4,0);
+        sort(matchsticks.rbegin(),matchsticks.rend()); // Optimizaton 
+        return dfs(matchsticks,sides,0,size);
+    }
+    
+    bool dfs(vector<int>& sticks,vector<int> sides,int index, int maxSide){
+        if(index==sticks.size()){
+            if(sides[0]==sides[1]  && sides[1]==sides[2]&& sides[2]==sides[3]) return true;
+            return false;
+        }
+        
+        for(int i=0;i<sides.size();i++){
+            if(sides[i]+sticks[index]> maxSide) continue; // Optimizaton 
+            int j=i-1;
+            while(j>=0){
+                if(sides[j]==sides[i]){  // Optimizaton 
+                    break;
+                }
+                j--;
+            }
+            if(j!=-1) continue;
+            
+            sides[i]+=sticks[index];
+            if(dfs(sticks,sides,index+1,maxSide)) return true;
+            sides[i]-=sticks[index];
+        }
+        
+        return false;
+    }
+};

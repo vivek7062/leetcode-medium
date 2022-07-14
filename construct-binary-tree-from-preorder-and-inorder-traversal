@@ -1,0 +1,32 @@
+// Question - https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int rootIdx = 0;
+        return buildTree(preorder,inorder,0,inorder.size()-1,rootIdx);
+    }
+    
+    TreeNode* buildTree(vector<int> preorder,vector<int> inorder,int start, int end,int & rootIdx){
+        if(start>end){
+            return NULL;
+        }
+        
+        int rootIndex = start;  // find the root from inorder
+        while(inorder[rootIndex] != preorder[rootIdx]) rootIndex++;
+        
+        rootIdx++;
+        //int rootIndex = findRootIndex(preorder,inorder,start,end);
+        TreeNode* temp1 = new TreeNode(inorder[rootIndex]);
+        
+        temp1->left =  buildTree(preorder,inorder, start,  rootIndex-1, rootIdx);
+        temp1->right = buildTree(preorder,inorder, rootIndex+1,  end ,rootIdx);
+        
+        return temp1;
+        
+    }
+    
+};

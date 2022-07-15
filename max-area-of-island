@@ -1,0 +1,36 @@
+// Question - https://leetcode.com/problems/max-area-of-island/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int ans=0;
+        
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[0].size();j++){
+                if(grid[i][j]==1){
+                    int area=0;
+                    areaByDFS(grid,i,j,area) ;
+                    ans= max(ans,area);
+                }
+            }
+        }
+        
+        return ans;
+    }
+    
+    void areaByDFS(vector<vector<int>> & grid,int row , int col,int &area){
+        if((row<0 || col<0 || row>grid.size()-1 || col>grid[0].size()-1) || grid[row][col]==0)
+        {
+            return ;
+        }
+        area++;
+        grid[row][col]=0;
+        
+        areaByDFS(grid,row+1 , col,area);
+        areaByDFS(grid,row-1 , col,area);
+        areaByDFS(grid,row , col+1,area);
+        areaByDFS(grid,row , col-1,area);
+    }
+};

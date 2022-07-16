@@ -1,0 +1,30 @@
+// Question - https://leetcode.com/problems/out-of-boundary-paths/
+// Answer in cpp
+
+class Solution {
+public:
+    vector<vector<vector<int>>> dp;
+    int mod = pow(10,9) + 7;
+    int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        int ans=0;
+        dp = vector(maxMove+1,vector(m+1,vector(n+1,-1)));
+        return findPath(m,n,maxMove,startRow,startColumn,0);
+    }
+    
+    int findPath(int m,int n, int maxMove,int startRow , int startColumn,int currentmove)     {
+        if(startRow < 0 || startColumn < 0 || startRow >= m || startColumn >= n){
+            return 1;
+        }
+        if(currentmove==maxMove){
+            return 0;
+        }
+        if(dp[currentmove][startRow][startColumn]!=-1) return dp[currentmove][startRow][startColumn]%mod;
+        int move=0;
+        move = (move+ findPath(m,n,maxMove,startRow+1,startColumn,currentmove+1))%mod;
+        move = (move +findPath(m,n,maxMove,startRow-1,startColumn,currentmove+1))%mod;
+        move = (move+findPath(m,n,maxMove,startRow,startColumn+1,currentmove+1))%mod;
+        move = (move+findPath(m,n,maxMove,startRow,startColumn-1,currentmove+1))%mod;
+        dp[currentmove][startRow][startColumn]=move%mod;
+        return dp[currentmove][startRow][startColumn];
+    }
+};

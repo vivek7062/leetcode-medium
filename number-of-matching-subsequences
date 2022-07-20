@@ -1,0 +1,32 @@
+// Question - https://leetcode.com/problems/number-of-matching-subsequences/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    int numMatchingSubseq(string s, vector<string>& words) {
+        int ans=0;
+        vector<vector<int>> mapping(26);
+        
+        for(int i=0;i<s.size();i++){
+            mapping[s[i]-'a'].push_back(i);
+        }
+        for(auto& word : words) {
+            int currentIndex=-1;
+            ans++;
+            for(char c: word){
+                auto& v = mapping[c-'a'];
+                auto index = upper_bound(v.begin(),v.end(),currentIndex);
+                if(index==v.end()){
+                   ans--;
+                   break;
+                } 
+                currentIndex = *index;
+            }
+           
+        }
+        
+        return ans;
+    }
+};

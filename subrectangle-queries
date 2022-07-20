@@ -1,0 +1,33 @@
+// Question - https://leetcode.com/problems/subrectangle-queries/
+// Answer in cpp
+
+
+
+class SubrectangleQueries {
+    vector<vector<int>> rect;
+    vector<vector<int>> temp;
+public:
+    SubrectangleQueries(vector<vector<int>>& rectangle) {
+        rect=rectangle;
+    }
+    
+    void updateSubrectangle(int row1, int col1, int row2, int col2, int newValue) {
+        vector<int> vec = {row1,col1,row2,col2,newValue};
+        temp.push_back(vec);
+    }
+    
+    int getValue(int row, int col) {
+        for(int i=temp.size()-1;i>=0;i--){
+            if(row>=temp[i][0] && row<= temp[i][2]&& col>=temp[i][1] && col<=temp[i][3]) return temp[i][4];
+        }
+        
+        return rect[row][col];
+    }
+};
+
+/**
+ * Your SubrectangleQueries object will be instantiated and called as such:
+ * SubrectangleQueries* obj = new SubrectangleQueries(rectangle);
+ * obj->updateSubrectangle(row1,col1,row2,col2,newValue);
+ * int param_2 = obj->getValue(row,col);
+ */

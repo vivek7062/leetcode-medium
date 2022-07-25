@@ -1,0 +1,35 @@
+// Question - https://leetcode.com/problems/reverse-linked-list-ii/
+// Answer in cpp
+
+
+class Solution {
+public:
+    ListNode* reverseBetween(ListNode* head, int left, int right) {
+        ListNode *ans=head;
+        stack<int> st;
+        int count =1;
+        while(head){
+            if(count>=left && count<=right){
+                st.push(head->val);
+            }
+            if(count>right) break;
+            head = head->next;
+            count++;
+        }
+        head = ans;
+        count=1;
+        
+        while(head && st.size()>0){
+            if(count>=left && count<=right){
+                head->val = st.top();
+                st.pop();
+            }
+            if(count>right) break;
+            head = head->next;
+            count++;
+        }
+        
+       
+        return ans;
+    }
+};

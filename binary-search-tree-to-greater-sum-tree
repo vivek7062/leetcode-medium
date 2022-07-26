@@ -1,0 +1,19 @@
+// Question - https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/
+// Answer in cpp
+
+
+class Solution {
+public:
+    TreeNode* bstToGst(TreeNode* root) {
+        int sum=0;
+        tree(root, sum);
+        return root;
+    }
+    void tree(TreeNode* root, int &sum){
+        if(!root) return;
+        tree(root->right,sum);
+        sum+=root->val;
+        root->val = sum;
+        tree(root->left,sum);
+    }
+};

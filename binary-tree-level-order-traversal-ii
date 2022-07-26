@@ -1,0 +1,26 @@
+// Question - https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    vector<vector<int>> levelOrderBottom(TreeNode* root) {
+        vector<vector<int>> ans;
+        levelOrder(root,0,ans);
+        return ans;
+    }
+    
+    void levelOrder(TreeNode* root, int level, vector<vector<int>> &ans){
+        if(!root) return;
+        if(ans.size()>level){
+            ans[ans.size()-level-1].push_back(root->val);
+        } else{
+            vector<int> temp(1,root->val);
+            ans.insert(ans.begin(),temp);
+        }
+        levelOrder(root->left,level+1,ans);
+        levelOrder(root->right,level+1,ans);
+        
+    }
+};

@@ -1,0 +1,19 @@
+// Question - https://leetcode.com/problems/count-complete-tree-nodes/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int countNodes(TreeNode* root) {
+        if(!root) return 0;
+        int left =0,right=0;
+       for(TreeNode* p=root;p;p=p->left) left++;
+       for(TreeNode* p=root;p;p=p->right) right++;
+        if(right==left){
+            return (1<<left)-1;
+        } else{
+            return 1+ countNodes(root->left)+countNodes(root->right);
+        }
+    }
+    
+};

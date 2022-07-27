@@ -1,0 +1,24 @@
+// Question - https://leetcode.com/problems/find-bottom-left-tree-value/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        int ans=0,currentLevel=0;
+        if(root) ans=root->val;
+        bottomLeft(root,ans,0,currentLevel);
+        return ans;
+    }
+    
+    void bottomLeft(TreeNode* root, int &ans,int level,int &currentLevel){
+        if(!root) return;
+        if(!root->left && !root->right && currentLevel<level) {
+            ans = root->val;
+            currentLevel=level;
+        }
+        bottomLeft(root->left,ans,level+1,currentLevel);
+        bottomLeft(root->right,ans,level+1,currentLevel);
+    }
+};

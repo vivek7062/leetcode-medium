@@ -1,0 +1,41 @@
+// Question - https://leetcode.com/problems/word-subsets/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
+        vector<string> ans;
+        vector<int> target=vector(26,0);
+         vector<int> temp;
+        for(string second : words2){
+           temp = vector(26,0);
+            for(char c : second){
+                temp[c-'a']++;
+                target[c-'a'] = max(temp[c-'a'],target[c-'a']);
+            }
+        }
+        
+        for( string first: words1){
+            temp = vector(26,0);
+            for(char c : first){
+                 temp[c-'a']++;
+            }
+            
+            if(universal(temp,target)){
+                ans.push_back(first);
+            }
+        }
+        
+        return ans;
+    }
+    bool universal(vector<int> source, vector<int> target){
+        for(int i=0;i<26;i++){
+            if(target[i]>source[i]){
+                return false;
+            }
+        }
+        
+        return true;
+    }

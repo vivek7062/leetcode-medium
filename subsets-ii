@@ -1,0 +1,28 @@
+// Question - https://leetcode.com/problems/subsets-ii/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> ans;
+        subset(ans, {}, nums,0,nums.size());
+        std::sort(ans.begin(), ans.end());
+        ans.erase(std::unique(ans.begin(), ans.end()), ans.end());
+        return ans;
+    }
+    
+    void subset(vector<vector<int>> &ans, vector<int> curr,vector<int>& nums,int i,int len){
+        if(i==len){
+            sort(curr.begin(), curr.end());
+            ans.push_back(curr);
+            return ;
+        }
+        
+        subset(ans,curr,nums,i+1,len);
+        curr.push_back(nums[i]);
+        subset(ans,curr,nums,i+1,len);
+        
+    }
+};

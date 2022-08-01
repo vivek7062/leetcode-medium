@@ -1,0 +1,36 @@
+// Question - https://leetcode.com/problems/all-elements-in-two-binary-search-trees/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
+        vector<int> list1,list2,temp;
+        BST(root1,list1);
+        BST(root2,list2);
+        int p1=list1.size()-1,p2=list2.size()-1,i;
+        temp = vector(list2.size(),0);
+        list1.insert(list1.end(), temp.begin(), temp.end());
+        i = list1.size()-1;
+    
+       while(p2>=0){
+            if(p1>=0 && list1[p1]>list2[p2]){
+                list1[i--] = list1[p1--];
+            } else{
+                list1[i--] = list2[p2--];
+            }
+        }
+    
+        
+        return list1;
+        
+    }
+    
+    void BST(TreeNode* root,vector<int> &list){
+        if(!root) return;
+        BST(root->left,list);
+        list.push_back(root->val);
+        BST(root->right,list);
+    }
+};

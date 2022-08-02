@@ -1,0 +1,21 @@
+// Question - https://leetcode.com/problems/count-good-nodes-in-binary-tree/
+// Answer in cpp
+
+
+
+class Solution {
+    int ans=0;
+public:
+    int goodNodes(TreeNode* root) {
+        if(!root) return 0;
+        preorder(root,root->val);
+        return ans;
+    }
+    
+    void preorder(TreeNode* root , int maxVal){
+        if(!root) return;
+        if(root->val>=maxVal) ans++;
+        preorder(root->left,max(maxVal,root->val));
+        preorder(root->right,max(maxVal,root->val));
+    }
+};

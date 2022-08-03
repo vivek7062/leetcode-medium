@@ -1,0 +1,28 @@
+// Question - https://leetcode.com/problems/my-calendar-i/
+// Answer in cpp
+
+
+I am putting +1 for start and -1 for end 
+if any pair will overlap that 2 start will be together and one time we will get more than once during sum
+class MyCalendar {
+public:
+    map<int,int> mp;
+    MyCalendar() {
+        
+    }
+    
+    bool book(int start, int end) {
+        mp[start]++;
+        mp[end]--;
+        int sum=0;
+        for(auto p : mp){
+            sum+=p.second;
+            if(sum>1){
+                mp[start]--;
+                mp[end]++;
+                return false;
+            }
+        }
+        return true;
+    }
+};

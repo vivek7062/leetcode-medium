@@ -1,0 +1,23 @@
+// Question - https://leetcode.com/problems/reduce-array-size-to-the-half/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int minSetSize(vector<int>& arr) {
+        map<int,int> mp;
+        multiset<int,greater<int>> temp;
+        int half = arr.size()/2;
+        int ans=0,deleted=0;
+        for(auto & val : arr) mp[val]++;
+        for(auto & val : mp) temp.insert(val.second);
+       
+        for(auto & val : temp){
+            deleted+=val, ans++;
+           if(deleted>=half) return ans;
+        }
+        return -1;
+    }
+    
+   
+};

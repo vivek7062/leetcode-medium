@@ -1,0 +1,23 @@
+// Question - https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    int pairSum(ListNode* head) {
+        int ans=INT_MIN;
+        int n=0;
+        vector<int> vec;
+        while(head){
+            vec.push_back(head->val);
+            head=head->next;
+            n++;
+        }
+        for(int i=0;i<=((n/2)-1);i++){
+            ans = max(ans,vec[n-1-i]+vec[i]);
+        }
+        
+        return ans;
+    }
+};

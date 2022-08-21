@@ -1,0 +1,62 @@
+// Question- https://leetcode.com/problems/largest-palindromic-number/
+// Answer in cpp
+
+
+
+Just first we find the occurence of all numbers and find maximum even occurance number and reduce all even occurence by 1
+becuase we can place even occurence number only first time in center
+then we sort then number because we need maximum number first to make big number
+then we are putting half number left side and half number right side and in last we are putting even number in center if we find it.
+
+class Solution {
+public:
+    string largestPalindromic(string num) {
+        map<char,int> mp;
+        string ans="";
+        
+        for(char c : num){
+            mp[c]++;
+        }
+        char maxsingle='p';
+        string first="",second="";
+        vector<char> nums;
+        for(auto & m : mp){
+            
+            if(m.second&1){
+                if(maxsingle=='p'){
+                    maxsingle = m.first;
+                   
+                } else{
+                   maxsingle = max(maxsingle,m.first);
+                }
+                
+                 mp[m.first]--;
+            }
+            if(mp[m.first]>0){
+                nums.push_back(m.first);
+            }
+        }
+        sort(nums.rbegin(),nums.rend());
+        
+        for(auto & c : nums){
+            if(first=="" && c=='0') continue;
+            string str = string(mp[c]/2,c);
+            first = first+str;
+            second = str+second;
+            
+        }
+        
+        
+        if(maxsingle!='p'){
+            ans = first+maxsingle+second;
+        } else{
+            ans = first+second;
+        }  
+        
+        if(ans==""){
+            ans="0";
+        }
+        
+        return ans;
+    }
+};

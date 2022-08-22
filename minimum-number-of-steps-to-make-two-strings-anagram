@@ -1,0 +1,15 @@
+// Question - https://leetcode.com/problems/minimum-number-of-steps-to-make-two-strings-anagram/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int minSteps(string s, string t) {
+        int ans=0;
+        map<char,int> mp;
+        for(auto & c : s)  mp[c]++;
+        for(auto & c : t) mp[c]--;
+        for(auto & m : mp) if(m.second<0) ans+=m.second;
+        return abs(ans);
+    }
+};

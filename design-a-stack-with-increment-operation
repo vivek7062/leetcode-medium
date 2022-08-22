@@ -1,0 +1,29 @@
+// Question - https://leetcode.com/problems/design-a-stack-with-increment-operation/
+// Answer in cpp
+
+
+
+class CustomStack {
+    vector<int> vec;
+    int pos=-1;
+    int max=0;
+public:
+    CustomStack(int maxSize) {
+        vec = vector(maxSize,0);
+        max = maxSize;
+    }
+    
+    void push(int x) {
+        if(pos>=max-1) return;
+        vec[++pos] = x;
+    }
+    
+    int pop() {
+        if(pos==-1) return pos;
+        return vec[pos--];
+    }
+    
+    void increment(int k, int val) {
+        for(int i=0;i<vec.size() && i<k;i++) vec[i]+=val;
+    }
+};

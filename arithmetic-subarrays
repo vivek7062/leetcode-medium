@@ -1,0 +1,49 @@
+// Question - https://leetcode.com/problems/arithmetic-subarrays/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<bool> checkArithmeticSubarrays(vector<int>& nums, vector<int>& l, vector<int>& r) {
+        
+        vector<bool> ans;
+        int len = l.size();
+        
+        for(int i=0;i<len;i++){
+            priority_queue<int> pq;
+           for(int j=l[i];j<=r[i];j++){
+               pq.push(nums[j]);
+           }
+            if(pq.size()<=2){
+                ans.push_back(true);
+                continue;
+            }
+            int prev = pq.top(),curr;
+            int diff=INT_MIN;
+            pq.pop();
+            bool flag= true;
+            
+            while(pq.size()>0){
+                curr = pq.top();
+                pq.pop();
+                if(diff==INT_MIN){
+                    diff= prev-curr;
+                } else{
+                    
+                    if(prev-curr!=diff){
+                        flag = false;
+                        break;
+                    }
+                   
+                    
+                }
+                prev=curr;
+            }
+            
+            ans.push_back(flag);
+        }
+        
+        
+        return ans;
+    }
+};

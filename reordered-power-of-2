@@ -1,0 +1,31 @@
+// Question - https://leetcode.com/problems/reordered-power-of-2/
+// Answer in cpp
+
+
+class Solution {
+public:
+    bool reorderedPowerOf2(int n) {
+        if(n==1) return n;
+        int temp=2;
+        map<map<int,int>,int> mp;
+        map<int,int> m1;
+        while(n){
+            m1[n%10]++;
+            n/=10;
+            
+        }
+        mp[m1]++;
+        for(int i=0;i<30;i++){
+            temp=temp<<1;
+            n=temp;
+            map<int,int> m2;
+            while(n){
+            m2[n%10]++;
+            n/=10;
+            }
+            if(mp[m2]>=1) return true;
+        }
+        
+        return false;
+    }
+};

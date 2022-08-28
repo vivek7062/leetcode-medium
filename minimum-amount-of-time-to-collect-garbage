@@ -1,0 +1,47 @@
+// Question - https://leetcode.com/problems/minimum-amount-of-time-to-collect-garbage/
+// Answer in cpp
+
+class Solution {
+public:
+    int garbageCollection(vector<string>& garbage, vector<int>& travel) {
+        map<int,map<int,int>> mp;
+        int len = garbage.size(),d1=0,d2=0,d3=0;
+        int ans=0;
+        for(int i=0;i<len;i++){
+            map<int,int> m;
+            for(char c: garbage[i]){
+                m[c]++;
+            }
+            mp[i] =m; 
+            
+            if(i==0){
+                ans+=mp[i]['G'];
+                ans+=mp[i]['P'];
+                ans+=mp[i]['M'];
+            } else{
+                d1+=travel[i-1];
+                d2+=travel[i-1];
+                d3+=travel[i-1];
+                if(mp[i]['G']>0){
+                    ans+=d1;
+                    d1=0;
+                    ans+=mp[i]['G'];
+                }
+                if(mp[i]['P']>0){
+                    ans+=d2;
+                    d2=0;
+                    ans+=mp[i]['P'];
+                }
+                if(mp[i]['M']>0){
+                    ans+=d3;
+                    d3=0;
+                    ans+=mp[i]['M'];
+                }
+            }
+        }
+        
+    
+        return ans;
+        
+    }
+};

@@ -1,0 +1,23 @@
+// Question - https://leetcode.com/problems/find-elements-in-a-contaminated-binary-tree/
+// Answer in cpp
+
+
+class FindElements {
+    map<int,int> mp;
+public:
+    FindElements(TreeNode* root) {
+        if(root)  root->val=0,mp[0]++;
+        checkNumber(root);
+    }
+    
+    bool find(int target) {
+        return mp[target]>0; 
+    }
+    void checkNumber(TreeNode* root){
+        if(!root) return ;
+        if(root->left) root->left->val = root->val*2+1,mp[root->val*2+1]++;
+        if(root->right) root->right->val = root->val*2+2,mp[root->val*2+2]++;
+        checkNumber(root->left);
+        checkNumber(root->right);
+    }
+};

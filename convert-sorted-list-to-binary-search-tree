@@ -1,0 +1,25 @@
+// QUestion - https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/
+// Answer in cpp
+
+
+class Solution {
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        vector<int> vec;
+        while(head){
+            vec.push_back(head->val);
+            head = head->next;
+        }
+        
+        return convertTree(vec,0,vec.size()-1);
+    }
+    
+    TreeNode* convertTree(vector<int> & vec,int left,int right){
+        if(left>right) return NULL;
+        int mid = left + (right-left)/2;
+        TreeNode* node = new TreeNode(vec[mid]);
+        node->left = convertTree(vec,left,mid-1);
+        node->right = convertTree(vec,mid+1,right);
+        return node;
+    }
+};

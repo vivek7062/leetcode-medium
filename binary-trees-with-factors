@@ -1,0 +1,25 @@
+// Question - https://leetcode.com/problems/binary-trees-with-factors/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int numFactoredBinaryTrees(vector<int>& arr) {
+        long long int ans=1;
+        sort(arr.begin(),arr.end());
+        map<int,long long int> mp;
+        mp[arr[0]]++;
+        for(int i=1;i<arr.size();i++){
+            mp[arr[i]]++;
+            for(int j=0;j<i;j++){
+                if(arr[i]%arr[j]==0){
+                    if(mp[arr[i]/arr[j]]>0){
+                         mp[arr[i]]+= (mp[arr[j]]*mp[arr[i]/arr[j]]);
+                    }
+                }
+            }
+            ans+=mp[arr[i]];
+        }
+        return ans%1000000007;
+    }
+};

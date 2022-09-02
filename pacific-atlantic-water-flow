@@ -1,0 +1,46 @@
+// Question - https://leetcode.com/problems/pacific-atlantic-water-flow/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<vector<int>> pacificAtlantic(vector<vector<int>>& heights) {
+        vector<vector<int>> ans;
+        int rows = heights.size(), cols= heights[0].size();
+        vector<vector<int>> pracific(rows,vector(cols,0));
+        vector<vector<int>> atlantic(rows,vector(cols,0));
+        for(int i=0;i<cols;i++){
+            func(heights,0,i,INT_MIN,pracific);
+            func(heights,rows-1,i,INT_MIN,atlantic);
+        }
+        
+        for(int i=0;i<rows;i++){
+            func(heights,i,0,INT_MIN,pracific);
+            func(heights,i,cols-1,INT_MIN,atlantic);
+        }
+        
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(pracific[i][j]==1 && pracific[i][j]==atlantic[i][j])
+                {
+                    ans.push_back({i,j});
+                }
+            }
+        }
+        
+        return ans;
+    }
+    
+    void func(vector<vector<int>>& matrix,int row,int col,int prev,vector<vector<int>>& ocean){
+        if(row<0 || col<0 || row>=matrix.size() || col>=matrix[0].size() || ocean[row][col]==1 ||  prev>matrix[row][col]){
+            return ;
+        }
+        ocean[row][col]=1;
+        
+        func(matrix,row+1,col,matrix[row][col],ocean);
+        func(matrix,row-1,col,matrix[row][col],ocean);
+        func(matrix,row,col+1,matrix[row][col],ocean);
+        func(matrix,row,col-1,matrix[row][col],ocean);
+        
+    }
+};

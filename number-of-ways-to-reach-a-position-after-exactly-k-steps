@@ -1,0 +1,22 @@
+// Question - https://leetcode.com/problems/number-of-ways-to-reach-a-position-after-exactly-k-steps/
+// Answer in cpp
+
+class Solution {
+    int mod=1000000007;
+    vector<vector<int>> dp;
+public:
+    int numberOfWays(int startPos, int endPos, int k) {
+        if(endPos-startPos>k) return 0;
+        dp = vector(4001,vector(1001,-1));
+        return dfs(startPos,endPos,k);
+    }
+    
+    
+    int dfs(int s, int end,int k){
+        if(k==0 && s==end) return 1;
+        if(k==0) return 0;
+        if(dp[s+1000][k]!=-1) return dp[s+1000][k];
+        long long temp = dfs(s+1,end,k-1) +  dfs(s-1,end,k-1);
+        return dp[s+1000][k]=temp%mod;
+    }
+};

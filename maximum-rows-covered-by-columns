@@ -1,0 +1,43 @@
+// Question - https://leetcode.com/problems/maximum-rows-covered-by-columns/
+// Answer in cpp
+
+
+class Solution {
+    int ans=0,row,col;
+public:
+    int maximumRows(vector<vector<int>>& mat, int cols) {
+        row = mat.size(),col=mat[0].size();
+        vector<bool> visited(col,false);
+        dfs(mat,cols,0,visited);
+        return ans;
+    }
+    
+    void dfs(vector<vector<int>>& mat, int cols,int index, vector<bool> &visited){
+       
+        if(index==col && cols==0){
+            int count=0;
+            for(int i=0;i<row;i++){
+                bool flag=true;
+                for(int j=0;j<col;j++){
+                    if(mat[i][j]==1 && visited[j]==false){
+                        flag=false;
+                        break;
+                    }
+                }
+                if(flag){
+                    count++;
+                }
+            }
+            ans = max(ans,count);
+        }
+        if(index>=col || cols<0){
+            return;
+        }
+        
+        visited[index]=true;
+        dfs(mat,cols-1,index+1,visited);
+        visited[index]=false;
+        dfs(mat,cols,index+1,visited);
+        
+    }
+};

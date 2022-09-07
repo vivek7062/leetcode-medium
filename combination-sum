@@ -6,21 +6,22 @@ class Solution {
 public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         vector<int> temp;
-        sort(candidates.begin(),candidates.end());
-        set<int> s(candidates.begin(),candidates.end());
-        candidates.assign(s.begin(),s.end());
-        combination(candidates,target,temp,0);
+        dfs(0,target,candidates,temp);
         return ans;
     }
     
-    void combination(vector<int>& candidates,int target,vector<int>  temp,int i){
-        if(target==0) ans.push_back(temp);
-        if(i==candidates.size()) return ;
-        while(i<candidates.size() && target-candidates[i]>=0){
-            temp.push_back(candidates[i]);
-            combination(candidates,target-candidates[i],temp,i);
-            i++;
+    void dfs(int index,int target,vector<int>& candidates,vector<int> &temp){
+        if(index==candidates.size() || target<=0){
+            if(target==0) ans.push_back(temp);
+            return;
+        }
+        
+        if(target-candidates[index]<=target){
+            temp.push_back(candidates[index]);
+            dfs(index,target-candidates[index],candidates,temp);
             temp.pop_back();
         }
+        dfs(index+1,target,candidates,temp);
     }
+    
 };

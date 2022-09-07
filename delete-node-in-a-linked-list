@@ -1,0 +1,21 @@
+// Question - https://leetcode.com/problems/delete-node-in-a-linked-list/
+// Answer in cpp
+
+
+As given we don't have pointer of first not we are at current node which we need to delete so we need to delete current node we need previous pointer but here is not any previous pointer 
+So we can do one thing
+1-.>2->3->4->-5->null
+suppose we want to delete node 3 and right now we are node 3
+then we replace next value(4) with current value and delete next node
+step 1 - 1->2->4->4->5->null (Replace)
+step 2 - 1->2->4->5->null (delete next node)
+So now can see we deleted current node
+
+
+class Solution {
+public:
+    void deleteNode(ListNode* node) {
+       node->val = node->next->val;
+       node->next = node->next->next;
+    }
+};

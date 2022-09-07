@@ -1,0 +1,30 @@
+// Question - https://leetcode.com/problems/combination-sum-ii/
+// Answer in cpp
+
+
+class Solution {
+    vector<vector<int>> ans;
+    public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<int> temp;
+        sort(candidates.begin(),candidates.end());
+        combination(candidates,target,temp,0);
+        return ans;
+    }
+    
+    void combination(vector<int>& candidates,int target,vector<int> & temp,int index){
+        if(index==candidates.size() || target<=0) {
+            if(target==0) ans.push_back(temp);
+            return;
+        }
+            
+        for(int i=index;i<candidates.size();i++){
+            if(i>index && candidates[i]==candidates[i-1]) continue;
+            if(candidates[i]>target) break;
+            temp.push_back(candidates[i]);
+            combination(candidates,target-candidates[i],temp,i+1);
+            temp.pop_back();
+        }
+        
+    }
+};

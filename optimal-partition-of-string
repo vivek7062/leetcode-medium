@@ -1,0 +1,22 @@
+// Question - https://leetcode.com/problems/optimal-partition-of-string/
+// Answer in cpp
+
+class Solution {
+    int ans=0;
+public:
+    int partitionString(string s) {
+       map<char,int> mp;
+        for(auto & c: s){
+            if(mp[c]>0){
+                mp.clear();
+                ans++;
+                mp[c]++;
+            }
+            mp[c]++;
+            
+        }
+        return ans+1;
+    }
+};
+
+

@@ -1,0 +1,23 @@
+// Question - https://leetcode.com/problems/bag-of-tokens/
+// Answer in cpp
+
+class Solution {
+public:
+    int bagOfTokensScore(vector<int>& tokens, int power) {
+        sort(tokens.begin(),tokens.end());
+        int i=0,j=tokens.size()-1;
+        int ans=0,maxAns=0;
+        while(i<=j){
+            if(tokens[i]<=power){
+                power-=tokens[i];
+                ans++,i++;
+            }else if(ans>0 && tokens[i]<=tokens[j]){
+                power+=tokens[j];
+                j--,ans--;
+            } else break;
+            maxAns = max(maxAns,ans);
+        }
+        
+        return maxAns;
+    }
+};

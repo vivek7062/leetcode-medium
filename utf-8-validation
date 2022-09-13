@@ -1,0 +1,67 @@
+// Question - https://leetcode.com/problems/utf-8-validation/
+// Answer in cpp
+
+
+We need to check UTF-8 sequence
+check if first digit is 0 then need to check remining numbers
+else if first 3 digit is 110 or 6 then need to check next digit have first 2 digit 10 or 2
+else if first 4 digit is 1110 or 14 then need to check next 2 digit have first 2 digit 10 or 2
+else if first 5 digit is 11110 or 30 then need to check next 3 digit have first 2 digit 10 or 2
+else false
+
+Example 1- 197 , 130, 1
+convert into binary
+
+11000101 10000010 00000001
+So first 0 index digit have satisfied 110 condition so for this 1 index digit should be start from 10XXXXXX or 2 digit so this sequence is good so now comes on 2 index digit
+Now in 2nd index digit first digit is 0 so it this bit also also satisfied 
+so we will return true
+
+Example 2- [235,140,4]
+convert into binary
+11101011 10001100 00000100
+So first 0 index digit start with 1110XXXX then to satisfied this 3 bit next 2 digit should start from 10XXXXXX or 2 (means 1 index and 2 index) But due to 2nd digit which not having start from 10 its fails to satisfied 3 bit condition.
+
+
+
+
+```
+class Solution {
+public:
+    bool validUtf8(vector<int>& data) {
+        int len=data.size();
+        for(int i=0;i<data.size();i++){
+            if(data[i]>>7==0){
+                continue;
+            } else if(data[i]>>5==6){
+                i = checkAnotherDigits(data,len,i+1,1);
+                if(i==-1) return false;
+                
+            } else if(data[i]>>4==14){
+                i = checkAnotherDigits(data,len,i+1,2);
+                if(i==-1) return false;
+            } else if(data[i]>>3==30){
+                i = checkAnotherDigits(data,len,i+1,3);
+                if(i==-1) return false;
+            } else return false;
+        }
+        
+        
+        return true;
+    }
+    
+    int checkAnotherDigits(vector<int>& data,int len ,int start,int count){
+                while(count>0 && start<len){
+                    if(data[start]>>6==2){
+                        count--;
+                        start++;
+                    } else{
+                        return -1;
+                    }
+                }
+                if(count) return -1;
+               
+        return start-1;
+    }
+};
+```

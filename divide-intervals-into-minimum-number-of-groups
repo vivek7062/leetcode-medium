@@ -1,0 +1,37 @@
+// Question - https://leetcode.com/problems/divide-intervals-into-minimum-number-of-groups/
+// Answer in cpp
+
+
+Consider this problem as train arrival and departure and then howmuch platform we needed.
+Lets suppose first index is arrival time and 2nd index is departure time
+T.C. - O(nlongn)
+S.C. - O(n)
+
+class Solution {
+public:
+    int minGroups(vector<vector<int>>& intervals) {
+        int ans=0;
+        vector<int> arrivals,departures;
+        for(auto &temp:intervals){
+            arrivals.push_back(temp[0]);
+            departures.push_back(temp[1]);
+        }
+        sort(arrivals.rbegin(),arrivals.rend());
+        sort(departures.rbegin(),departures.rend());
+        int current=0;
+        while(arrivals.size()){
+            int departTime = departures[departures.size()-1];
+            int arriveTime = arrivals[arrivals.size()-1];
+            if(arriveTime<=departTime){
+                current++;
+                arrivals.pop_back();
+            }
+            ans=max(ans,current);
+            if(arriveTime>departTime){
+                current--;
+                departures.pop_back();
+            }
+        }
+        return ans;
+    }
+};

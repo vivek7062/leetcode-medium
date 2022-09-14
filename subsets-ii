@@ -2,7 +2,7 @@
 // Answer in cpp
 
 
-
+1. first solution
 class Solution {
 public:
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
@@ -25,4 +25,31 @@ public:
         subset(ans,curr,nums,i+1,len);
         
     }
+};
+
+
+2. Second Solution
+
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> ans;
+        sort(nums.begin(),nums.end());
+        subset(ans, {}, nums,0,nums.size());
+        return ans;
+    }
+    
+    void subset(vector<vector<int>> &ans, vector<int> curr,vector<int>& nums,int index,int len){
+          
+           ans.push_back(curr);
+
+           for(int i=index;i<len;i++){
+               if(i!=index && nums[i]==nums[i-1]) continue;
+               curr.push_back(nums[i]);
+               subset(ans,curr,nums,i+1,len);
+               curr.pop_back();
+           }
+       }
+
+    
 };

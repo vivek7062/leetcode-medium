@@ -1,0 +1,25 @@
+// Question - https://leetcode.com/problems/the-number-of-weak-characters-in-the-game/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int numberOfWeakCharacters(vector<vector<int>>& properties) {
+        int ans=0,diffence=0,len = properties.size();
+        
+        sort(properties.begin(),properties.end(),sortWithCol);
+        diffence=properties[len-1][1];
+        for(int i=len-2;i>=0;i--){
+            if(properties[i][1]<diffence){
+                ans++;
+            } else{
+                diffence = properties[i][1];
+            }
+        }
+        return ans;
+    }
+    
+    static bool sortWithCol(const vector<int>&v1,const vector<int>&v2){
+        return v1[0]==v2[0]?v1[1]>v2[1]:v1[0]<v2[0];
+    }
+};

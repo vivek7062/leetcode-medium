@@ -1,0 +1,28 @@
+// Question - https://leetcode.com/problems/pseudo-palindromic-paths-in-a-binary-tree/
+// Answer in cpp
+
+As we know if total add occurence will be more than 1 than we can't make palindrom
+Ex - 1 2 3 4 3 4 -> can't make
+Ex- 1 2 3 2 3 -> can make
+Ex- 2 3 3 2 -> can make
+
+class Solution {
+    int ans=0;
+public:
+    int pseudoPalindromicPaths (TreeNode* root) {
+        map<int,int> mp;
+        dfs(root,mp,0);
+        return ans;
+    }
+    
+    void dfs(TreeNode* root,map<int,int> &mp,int odd){
+        if(!root) return;
+        mp[root->val]++;
+        if(mp[root->val]%2==0)  odd--;
+        else odd++;
+        dfs(root->left,mp,odd);
+        dfs(root->right,mp,odd);
+        mp[root->val]--;
+        if(!root->left && !root->right && odd<2) ans++;
+    }
+};

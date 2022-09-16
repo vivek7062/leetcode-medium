@@ -2,7 +2,7 @@
 //Answer in cpp
 
 
-
+Solution 1 - Using Swap
 class Solution {
 public:
     vector<vector<int>> permute(vector<int>& nums) {
@@ -34,3 +34,32 @@ public:
         return nums;
     }
 };
+
+
+//Solution - 2 Using map
+
+int main() {
+    void dfs(vector<int> &vec,vector<int> &curr,int index,int len, map<int,int> mp);
+    vector<int> vec={1,2,3,4,5,6};
+    vector<int> temp;
+    map<int,int> mp;
+    dfs(vec,temp,0,vec.size(),mp);
+}
+
+void dfs(vector<int> &vec, vector<int> &curr,int index,int len, map<int,int> mp){
+    if(index==len) {
+        for(auto& temp: curr){
+            cout<<temp<<" ";
+        }
+        cout<<endl;
+        return ;
+    }
+    for(int i= 0;i<len;i++){
+        if(mp[i]>0) continue;
+        mp[i]++;
+        curr.push_back(vec[i]);
+        dfs(vec,curr,index+1,len,mp);
+        curr.pop_back();
+        mp[i]--;
+    }
+}

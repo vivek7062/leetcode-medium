@@ -1,0 +1,54 @@
+// Question - https://leetcode.com/problems/find-duplicate-file-in-system/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    vector<vector<string>> findDuplicate(vector<string>& paths) {
+        vector<vector<string>> ans;
+        map<string,vector<string>> mp;
+        for(auto & s:paths){
+            size_t pos = 0;
+            string str;
+            string delimiter = " ";
+            int count=0;
+            string path;
+            pair<string,string> temp;
+            while ((pos = s.find(delimiter)) != std::string::npos) {
+                str = s.substr(0, pos);
+                if(!count) path=str+'/';
+                else{
+                    temp = splitFileNameAndContent(str);
+                    mp[temp.second].push_back(path+temp.first);
+                }
+                count=1;
+                s.erase(0, pos + delimiter.length());
+            }
+             temp = splitFileNameAndContent(s);
+             mp[temp.second].push_back(path+temp.first);
+        }
+        
+        for(auto& m:mp){
+            if(m.second.size()>1){
+               ans.push_back(m.second); 
+            }
+            
+        }
+        
+        return ans;
+    }
+    
+    pair<string,string> splitFileNameAndContent(string s){
+        string first,second;
+        string delimiter = "(";
+        size_t pos= s.find(delimiter);
+        first = s.substr(0, pos);
+        s.erase(0, pos + delimiter.length());
+        delimiter = ")";
+        pos= s.find(delimiter);
+        second = s.substr(0, pos);
+        return {first,second};
+        
+    }
+};

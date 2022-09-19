@@ -1,0 +1,53 @@
+// Question - https://leetcode.com/problems/sum-of-nodes-with-even-valued-grandparent/
+// Answer in cpp
+
+
+
+//1st solution withut space
+class Solution {
+    int ans=0;
+public:
+    int sumEvenGrandparent(TreeNode* root) {
+        dfs(root);
+        return ans;
+    }
+    void dfs(TreeNode* root){
+        if(!root) return;
+        
+        if(root->val%2==0){
+            if(root->left){
+                ans+= root->left->left?root->left->left->val:0;
+                ans+= root->left->right?root->left->right->val:0;
+            }
+            if(root->right){
+                 ans+= root->right->left?root->right->left->val:0;
+                 ans+= root->right->right?root->right->right->val:0;
+            }
+        }
+        
+        dfs(root->left);
+        dfs(root->right);
+    }
+};
+
+
+//2nd Solution using map
+class Solution {
+    int ans=0;
+public:
+    int sumEvenGrandparent(TreeNode* root) {
+        map<int,int> temp;
+        dfs(root,temp,0);
+        return ans;
+    }
+    void dfs(TreeNode* root,map<int,int>& mp,int level){
+        if(!root) return;
+        if(mp[level]>0){
+            ans+=root->val;
+        }
+        if(root->val%2==0) mp[level+2]++;
+        dfs(root->left,mp,level+1);
+        dfs(root->right,mp,level+1);
+        if(root->val%2==0) mp[level+2]--;
+    }
+};

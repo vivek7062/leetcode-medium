@@ -1,0 +1,5 @@
+// Question - https://leetcode.com/problems/second-highest-salary/
+// Answer in cpp 
+
+
+select max(salary) as SecondHighestSalary from Employee where salary < (select max(salary) from Employee); 

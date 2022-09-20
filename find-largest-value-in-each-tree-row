@@ -1,0 +1,20 @@
+// Question -https://leetcode.com/problems/find-largest-value-in-each-tree-row/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<int> largestValues(TreeNode* root) {
+        vector<int> ans;
+        dfs(root,ans,0);
+        return ans;
+    }
+    
+    void dfs(TreeNode* root,vector<int> &ans,int level){
+        if(!root) return;
+        if(ans.size()<=level)ans.push_back(root->val);
+        else ans[level] = max(ans[level],root->val);
+        dfs(root->left,ans,level+1);
+        dfs(root->right,ans,level+1);
+    }
+};

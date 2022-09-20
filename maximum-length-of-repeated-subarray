@@ -1,0 +1,25 @@
+// Question - https://leetcode.com/problems/maximum-length-of-repeated-subarray/
+// Answer in cpp
+
+
+
+class Solution {
+    int ans=0;
+    vector<vector<int>> dp;
+public:
+    int findLength(vector<int>& nums1, vector<int>& nums2) {
+        dp = vector(nums1.size()+1,vector(nums2.size()+1,-1));
+        length(nums1,nums2,0,0);
+        return ans;
+    }
+    
+    int length(vector<int>& nums1, vector<int>& nums2,int i, int j){
+        if(i>=nums1.size() || j>=nums2.size()) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        length(nums1,nums2,i+1,j);
+        length(nums1,nums2,i,j+1);
+        dp[i][j] = nums1[i]==nums2[j]?1+length(nums1,nums2,i+1,j+1):0;
+        ans = max(ans,dp[i][j]);
+        return dp[i][j];
+    }
+};

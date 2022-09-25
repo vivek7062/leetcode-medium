@@ -1,0 +1,38 @@
+// Question - https://leetcode.com/problems/find-all-good-indices/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<int> goodIndices(vector<int>& nums, int k) {
+        vector<int> ans;
+        int len = nums.size();
+        vector<int> v1(len,0);
+        vector<int> v2 = v1;
+        if(nums[0]>=nums[1]) v1[0]=1;
+        if(nums[len-1]>=nums[len-2]) v2[len-1]=1;
+        if(k==1){
+            for(int i=k;i<len-k;i++){
+            ans.push_back(i);
+        }
+            return ans;
+        }
+        for(int i=1;i<len;i++){
+            if(nums[i]<=nums[i-1]){
+                if(v1[i-1]==0) v1[i-1]=1;
+                v1[i] = v1[i-1]+1;
+            }
+        }
+        for(int i=len-2;i>=0;i--){
+            if(nums[i]<=nums[i+1]){
+                if(v2[i+1]==0) v2[i+1]=1;
+                v2[i] = v2[i+1]+1;
+            }
+        }
+        for(int i=k;i<len-k;i++){
+            if(v1[i-1]>=k && v2[i+1]>=k) ans.push_back(i);
+        }
+        
+        return ans;
+    }
+};

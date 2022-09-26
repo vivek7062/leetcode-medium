@@ -1,0 +1,16 @@
+// Question - https://leetcode.com/problems/concatenation-of-consecutive-binary-numbers/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int concatenatedBinary(int n) {
+        long long int ans=0;
+        int count=1;
+        while(count<=n){
+            ans = ((ans << (1+int(log2(count)))) %1000000007 +count) %1000000007;
+            count++;
+        }
+        return ans;
+    }
+};

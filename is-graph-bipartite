@@ -3,33 +3,53 @@
 
 
 class Solution {
+    bool ans=true;
 public:
     bool isBipartite(vector<vector<int>>& graph) {
         vector<int> colored(graph.size(),-1);
         for(int i=0;i<graph.size();i++){
             if(colored[i]==-1){
-                if(!bfs(i,colored,graph)) return false;
+               // if(!bfs(i,colored,graph)) return false;
+                dfs(graph,colored,i,0);  //for DFS
+                if( !ans) return false; //for DFS
             }
         }
         return true;
     }
     
-    bool bfs(int node, vector<int> &colored,vector<vector<int>>& graph){
-        queue<int> que;
-        que.push(node);
-        colored[node] = 1;
-        while(que.size()){
-            int val = que.front();
-            que.pop();
-            for(auto& num:graph[val]){
-                if(colored[num]==-1){
-                    colored[num] = 1-colored[val];
-                    que.push(num);
-                    
-                }else if(colored[num]==colored[val]) return false;
+    bool dfs(vector<vector<int>>& graph,vector<int> & colored,int node,int color){
+    
+        
+        for(auto& num:graph[node]){
+            if(colored[num]==-1){
+                colored[num]=1-color;
+                dfs(graph,colored,num,1-color);
+            } else if(colored[num]==colored[node]){
+                ans=false;
+                return false;
             }
         }
         
         return true;
     }
+    
+    
+//     bool bfs(int node, vector<int> &colored,vector<vector<int>>& graph){
+//         queue<int> que;
+//         que.push(node);
+//         colored[node] = 1;
+//         while(que.size()){
+//             int val = que.front();
+//             que.pop();
+//             for(auto& num:graph[val]){
+//                 if(colored[num]==-1){
+//                     colored[num] = 1-colored[val];
+//                     que.push(num);
+                    
+//                 }else if(colored[num]==colored[val]) return false;
+//             }
+//         }
+        
+//         return true;
+//     }
 };

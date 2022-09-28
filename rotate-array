@@ -1,0 +1,31 @@
+// Question - https://leetcode.com/problems/rotate-array/
+// Answer in cpp
+
+
+Let's take an example
+1 2 3 4 5 and k=2
+step 1. reverse the given list
+5 4 3 2 1
+step 2. check how much element need to be rotate if k is more than element then take modulo i.e count = k%len otherwise count=k
+count=2
+strp 3. Now Again revers element from 0 to count-1 and count to lenght of array
+0 to 2-1 -> 4 5 3 2 1 
+2 to 4 ->    4 5 1 2 3
+Now you can see our list has been reverse 
+
+```
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int len = nums.size(),count=0;
+        if(k<=len) count=k; 
+        else count = k%len;
+        if(count==len) return;
+        reverse(nums.begin(),nums.end());
+        int start=0,end=count-1;
+        while(start<=end) swap(nums[start++],nums[end--]);
+        start = count,end = len-1;
+        while(start<=end) swap(nums[start++],nums[end--]);
+    }
+};
+```

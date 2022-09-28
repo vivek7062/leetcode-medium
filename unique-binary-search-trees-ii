@@ -1,0 +1,27 @@
+// Question - https://leetcode.com/problems/unique-binary-search-trees-ii/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<TreeNode*> generateTrees(int n) {
+        return dfs(1,n);
+    }
+    vector<TreeNode*> dfs(int start,int end){
+        if(start>end) return {NULL};
+        vector<TreeNode*> list;
+        for(int i=start;i<=end;i++){
+            vector<TreeNode*> leftNode = dfs(start,i-1);
+            vector<TreeNode*> rightNode = dfs(i+1,end);
+            for(auto& left:leftNode){
+                for(auto& right:rightNode){
+                    TreeNode* node = new TreeNode(i);
+                    node->left = left;
+                    node->right = right;
+                    list.push_back(node);
+                }
+            }   
+        }
+        return list;
+    }
+};

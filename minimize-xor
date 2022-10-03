@@ -1,0 +1,29 @@
+// Question - https://leetcode.com/problems/minimize-xor/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int minimizeXor(int a, int b) {
+        int countBitInNum2=0;
+        while(b){
+            countBitInNum2+=b%2;
+            b/=2;
+        }
+        int ans=0;
+        for(int i=31;i>=0 &&countBitInNum2;i-- ){
+            if((a&(1<<i))){
+                ans|=(1<<i);
+                countBitInNum2--;
+            }
+        }
+        for(int i=0;i<=31 && countBitInNum2;i++){
+            if( (ans&(1<<i))==0){
+                ans|=(1<<i);
+                countBitInNum2--;
+            }
+        }
+        
+        return ans;
+    }
+};

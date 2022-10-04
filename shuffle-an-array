@@ -1,0 +1,26 @@
+// Question - https://leetcode.com/problems/shuffle-an-array/
+// Answer in cpp
+
+
+class Solution {
+    vector<int> orginal,shuffle1;
+public:
+    Solution(vector<int>& nums) {
+        orginal = nums;
+        shuffle1 = nums;
+    }
+    
+    vector<int> reset() {
+        return orginal;
+    }
+    
+    vector<int> shuffle() {
+        
+        for(int i=shuffle1.size()-1;i>=1;i--){
+            int rendom = rand()%shuffle1.size();
+            swap(shuffle1[i],shuffle1[rendom]);
+        }
+        return shuffle1;
+        
+    }
+};

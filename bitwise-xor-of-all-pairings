@@ -1,0 +1,38 @@
+// Question - https://leetcode.com/problems/bitwise-xor-of-all-pairings/
+// Answer in cpp
+
+
+1. With count frequency if frequency odd then xor with answer
+```
+class Solution {
+public:
+    int xorAllNums(vector<int>& nums1, vector<int>& nums2) {
+        long long ans=0;
+        int len1=nums1.size(),len2=nums2.size();
+        if(len1%2==0 && len2%2==0) return 0;
+        map<int,int> mp;
+        for(auto& n1:nums1) mp[n1] = (mp[n1]+len2)%2==0?0:1;
+        for(auto& n2:nums2) mp[n2] = (mp[n2]+len1)%2==0?0:1;
+        for(auto& m:mp){
+            if(m.second%2!=0) ans = ans^m.first;
+        }     
+        return ans;
+    }
+};
+```
+
+2. Wihtout space
+```
+class Solution {
+public:
+    int xorAllNums(vector<int>& nums1, vector<int>& nums2) {
+        int len1=nums1.size(),len2=nums2.size();
+        if(len1%2==0 && len2%2==0) return 0;
+        map<int,int> mp;
+        int xor1=0,xor2=0;
+        for(auto& n1:nums1) mp[n1] = xor1^=n1;
+        for(auto& n2:nums2) mp[n2] = xor2^=n2;
+        return (len1%2 && len2%2) ? xor1^xor2 : len1%2 ? xor2 : xor1 ;
+    }
+};
+```

@@ -1,0 +1,26 @@
+// Question - https://leetcode.com/problems/time-based-key-value-store/
+// Answer in cpp
+
+class TimeMap {
+    map<string,map<int,string>> mp;
+public:
+    TimeMap() {
+        
+    }
+    
+    void set(string key, string value, int timestamp) {
+        mp[key][timestamp]=value;
+    }
+    
+    string get(string key, int timestamp) {
+        string ans= mp[key][timestamp];
+        if(ans!="") return ans;
+        for (auto iter = mp[key].rbegin(); iter !=  mp[key].rend(); ++iter) {
+           
+        if(iter->first<=timestamp && iter->second!=""){
+            return iter->second;
+        }
+        }
+        return mp[key][timestamp];
+    }
+};

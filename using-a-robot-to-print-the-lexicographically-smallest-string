@@ -1,0 +1,35 @@
+// Question - https://leetcode.com/problems/using-a-robot-to-print-the-lexicographically-smallest-string/
+// Answer in cpp
+
+
+class Solution {
+public:
+    string robotWithString(string s) {
+        string ans="";
+        vector<int> freq(26);
+        stack<char> st;
+        for(auto& ch:s)freq[ch-'a']++;
+        for(auto& ch:s){
+            st.push(ch);
+            freq[ch-'a']--;
+            while(st.size() && st.top()<=getFrequency(freq)){
+                ans+=st.top();
+                st.pop();
+            }
+        }
+        while(st.size()){
+                ans+=st.top();
+                st.pop();
+         }
+        
+        return ans;
+    }
+    
+    char getFrequency(vector<int> freq){
+       for(int i=0;i<26;i++){
+           if(freq[i]) return 'a'+i;
+       }
+        
+        return 'A';
+    }
+};

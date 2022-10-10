@@ -1,0 +1,26 @@
+// Question - https://leetcode.com/problems/count-primes/
+// Answer in cpp
+
+
+class Solution {
+    
+public:
+    int countPrimes(int n) {
+        int ans=0;
+        vector<bool> vec(n,true);
+        if(1<=n) {
+            vec[0]=false;
+            vec[1]=false;
+        }
+        for(int i=2;i*i<n;i++){
+            if(!vec[i]) continue;
+            for(int j=i*i;j<n;j+=i){
+                vec[j] = false;
+            }
+        }
+        for(int i=0;i<n;i++){
+            if(vec[i])ans++;
+        }
+       return ans;
+    }
+};

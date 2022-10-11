@@ -1,0 +1,35 @@
+// Question - https://leetcode.com/problems/increasing-triplet-subsequence/
+// Answer in cpp
+
+
+
+
+Lets take an example to undersatnd this solution
+Ex.  2 1 5 0 4 6
+take two variable first = INT_MAX,second=INT_MAX
+Now iterate whole array and check
+if number is maximum of both number FIRST and SECOND then return true
+and if number less than first then assign same number in FIRST
+and if number morethan first then assign in SECOND
+i=0 num = 2 Then first = 2 and Second = INT_MAX
+i=1 num = 1 Then first = 1 and Second = INT_MAX
+i=2 num = 5 Then first = 1 and Second = 5
+i=3 num = 0 Then first = 0 and Second = 5
+i=4 num = 4 Then first = 1 and Second = 4
+i=5 num = 6 Then first = 1 and Second = 4 now 6 is bigger of both value first and second so we will return true 
+
+
+
+
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        int first = INT_MAX, second=INT_MAX;
+        for(auto& num:nums){
+            if(num>second && second>first) return true;
+            else if(num<first) first = num;
+            else if(num>first) second=num;
+        }
+        return false;
+    }
+};

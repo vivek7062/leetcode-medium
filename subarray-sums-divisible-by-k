@@ -1,0 +1,21 @@
+// Question - https://leetcode.com/problems/subarray-sums-divisible-by-k/
+// Answer in cpp
+
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& nums, int k) {
+        int ans=0,rem=0;
+        map<int,int> mp;
+        mp[0]=1;
+        long long sum=0;
+        for(auto& num:nums){
+            sum+=num;
+            rem = sum%k;
+            if(rem<0) rem+=k;
+            if(mp[rem]>=1) ans+=mp[rem];
+            mp[rem]++;
+        }
+        
+        return ans;
+    }
+};

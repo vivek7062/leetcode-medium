@@ -1,0 +1,34 @@
+// Question - https://leetcode.com/problems/insert-delete-getrandom-o1/
+// Answer in cpp
+
+
+class RandomizedSet {
+    vector<int> vec;
+    map<int,int> mp;
+public:
+    RandomizedSet() {
+        
+    }
+    
+    bool insert(int val) {
+        if(mp.find(val)!=mp.end())return false;
+        vec.push_back(val);
+        mp[val] = vec.size()-1;
+        return true;    
+    }
+    
+    bool remove(int val) {
+        if(mp.find(val)==mp.end())return false;
+        int index = mp[val];
+        vec[index] = vec[vec.size()-1];
+        mp[vec[index]] = index;
+        vec.pop_back();
+        mp.erase(val);
+        return true;
+    }
+    
+    int getRandom() {
+        int index = random()%vec.size();
+        return vec[index];
+    }
+};

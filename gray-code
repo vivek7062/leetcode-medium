@@ -1,0 +1,21 @@
+// Question - https://leetcode.com/problems/gray-code/
+// Answer in cpp
+
+class Solution {
+public:
+    vector<int> grayCode(int n) {
+        vector<int> ans;
+        int sum=2;
+        ans.push_back(0);
+        ans.push_back(1);
+        generateGrayCode(n-1,ans,sum);
+        return ans;
+    }
+    void generateGrayCode(int n, vector<int> &ans , int sum){
+        if(n==0) return ;
+        for(int i =ans.size()-1 ;i>=0;i--){
+            ans.push_back(sum+ans[i]);
+        }
+        generateGrayCode(n-1,ans,2*sum);
+    }
+};

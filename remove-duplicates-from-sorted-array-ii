@@ -1,0 +1,14 @@
+// Question - https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int removeDuplicates(vector<int>& nums) {
+        int i=0;
+        for(auto& num:nums){
+            if(i==0 || i==1 || num!=nums[i-2]) nums[i++]=num;
+        }
+        return i;
+    }
+};

@@ -1,0 +1,25 @@
+// Question - https://leetcode.com/problems/longest-palindrome-by-concatenating-two-letter-words/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int longestPalindrome(vector<string>& words) {
+        int ans=0;
+        int middleSame=0;
+        map<string,int> mp;
+        for(auto& str:words) mp[str]++;
+        
+        for(auto& str:words){
+            string temp = string(str.rbegin(), str.rend());
+            if(mp[temp]>0 && mp[str]>0) {
+                mp[str]--;
+                mp[temp]--;
+                if(mp[str]>=0 && mp[temp]>=0)ans+=4;
+                else middleSame=1;
+            } 
+        }
+
+        return ans+(2*middleSame);
+    }
+};

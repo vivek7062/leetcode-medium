@@ -1,0 +1,48 @@
+// Question - https://leetcode.com/problems/word-search/
+// Answer in cpp
+
+
+Approach
+Just check if we found first character in array if we found then will check next character in array top , bottom , left and right by using of DFS
+
+Complexity
+Time complexity:
+O(m*n)
+
+Space complexity:
+O(1)
+
+Code
+class Solution {
+    bool ans=false;
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        int row=board.size(), col = board[0].size();
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(board[i][j]==word[0] && !ans){
+                  dfs(i,j,row,col,board,word,0);  
+                }
+            }
+        }
+        return ans;
+    }
+    void dfs(int i,int j, int &row, int &col,vector<vector<char>>& board,string & word,int index){
+        if(index==word.size()){
+            ans=true;
+            return;
+        }
+        if(i<0 || i>=row || j<0 || j>=col || board[i][j]!=word[index]){
+            return;
+        }
+        char temp = board[i][j];
+        if(board[i][j]==word[index]){
+            board[i][j]='*';
+           dfs(i+1,j,row,col,board,word,index+1); 
+           dfs(i,j+1,row,col,board,word,index+1); 
+           dfs(i-1,j,row,col,board,word,index+1); 
+           dfs(i,j-1,row,col,board,word,index+1); 
+           board[i][j]=temp;
+        }
+    }
+};

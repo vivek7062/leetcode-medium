@@ -1,0 +1,41 @@
+// Question - https://leetcode.com/problems/simplify-path/
+// Answer in cpp
+
+
+Approach
+Just split string from "/" and push all delimeter in stack if delimeter not equal to empty and "." and ".." and pop string from stack if stack not empty and delimiter equal to ".."
+
+Complexity
+Time complexity:
+O(n)
+
+Space complexity:
+O(n) (stack)
+
+Code
+class Solution {
+public:
+    string simplifyPath(string path) {
+        string ans="";
+        stack<string> st;
+        string delimiter = "/";
+        size_t pos = 0;
+        string token;
+        while ((pos = path.find(delimiter)) !=string::npos) {
+            token = path.substr(0, pos);
+            if(!st.empty() && token=="..") st.pop();
+            else if(token!="" && token!="." && token!="..") st.push(token);
+            path.erase(0, pos + delimiter.length());
+        }
+        if(!st.empty() && path=="..") st.pop();
+            else if(path!="" && path!="." && path!="..") st.push(path);
+   
+        while(!st.empty()){
+            ans= "/"+st.top()+ans;
+            st.pop();
+        }
+
+        return ans==""?"/":ans;
+    }
+};
+Simplify Path - LeetCode

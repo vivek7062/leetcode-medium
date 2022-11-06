@@ -1,0 +1,53 @@
+// Question - https://leetcode.com/problems/total-cost-to-hire-k-workers/
+// Answer in cpp
+
+
+class Solution {
+public:
+    long long totalCost(vector<int>& costs, int k, int candidates) {
+        priority_queue<int, vector<int>, greater<int>> left,right;
+        int n=candidates,i=0,j=costs.size()-1;
+        long long ans=0;
+        if(costs.size()==1 && k>=1 && n>=1){
+            left.push(costs[i++]);
+        }
+        while(n-- && i<j){
+           left.push(costs[i++]);
+           if(i<j) right.push(costs[j--]);
+        }
+        while(k--){
+            if(!left.empty() && !right.empty()){
+                if(left.top()<=right.top()){
+                    ans+=left.top();
+                    left.pop();
+                    if(i<=j){
+                        left.push(costs[i++]);
+                    }
+                } else{
+                    ans+=right.top();
+                    right.pop();
+                    if(i<=j){
+                        right.push(costs[j--]);
+                    }
+                }
+            } else if(!left.empty())
+            {
+                    ans+=left.top();
+                    left.pop();
+                    if(i<=j){
+                        left.push(costs[i++]);
+                    }
+            } else{
+                    ans+=right.top();
+                    right.pop();
+                    if(i<=j){
+                        right.push(costs[j--]);
+                    }
+            }
+            cout<<ans<<endl;
+        }
+
+
+        return ans;
+    }
+};

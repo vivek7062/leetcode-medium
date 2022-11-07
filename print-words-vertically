@@ -1,0 +1,45 @@
+// Question - https://leetcode.com/problems/print-words-vertically/
+// Answer i cpp -> https://leetcode.com/problems/print-words-vertically/solutions/2787526/c-beats-100-o-n-check-once/
+
+
+Approach
+Just split all words and append all 0 index character of each word into 0 index word
+
+Complexity
+Time complexity:
+O(n)
+Space complexity:
+O(n)
+Code
+class Solution {
+public:
+    vector<string> printVertically(string s) {
+       vector<string> temp; 
+        string del=" ";
+        int maxVal=0;
+       int start, end = -1*del.size();
+        do {
+            start = end + del.size();
+            end = s.find(del, start);
+            string st= s.substr(start, end - start);
+            int size = st.size();
+            maxVal = max(maxVal,size);
+            temp.push_back(st);
+        } while (end != -1);
+        int index=0;
+        vector<string> ans(maxVal,"");
+        while(maxVal--){
+            string st="";
+            for(int i=0;i<temp.size();i++){
+                if(temp[i].size()>index){
+                    ans[index] += (st+temp[i][index]);
+                    st="";
+                } else{
+                    st += " ";
+                }
+            }
+            index++;
+        }
+        return ans;
+    }
+};

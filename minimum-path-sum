@@ -1,0 +1,20 @@
+// Question - https://leetcode.com/problems/minimum-path-sum/
+// Answer in cpp
+
+class Solution {
+    vector<vector<int>> dp;
+    public:
+    int minPathSum(vector<vector<int>>& grid) {
+        ios_base::sync_with_stdio(false);
+        cin.tie(NULL);
+        int row = grid.size(),col=grid[0].size();
+        dp= vector(row+1,vector(col+1,-1));
+        return dfs(0,0,row,col,grid);
+    }
+    int dfs(int i,int j,int &row,int &col,vector<vector<int>>& grid){
+        if(i>=row || j>=col) return INT_MAX;
+        if(i==row-1 && j==col-1) return grid[i][j];
+        if(dp[i][j]!=-1) return dp[i][j];
+        return dp[i][j] =grid[i][j]+ min(dfs(i+1,j,row,col,grid),dfs(i,j+1,row,col,grid));
+    }
+};

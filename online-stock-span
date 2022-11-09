@@ -1,0 +1,29 @@
+// Question - https://leetcode.com/problems/online-stock-span/
+// Answer in cpp
+
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+Code
+class StockSpanner {
+    stack<pair<int,int>> st;
+public:
+    StockSpanner() {
+    }
+    
+    int next(int price) {
+        int count=0;
+        while(!st.empty() && st.top().first<=price){
+            count+=st.top().second;
+            st.pop();
+        } 
+        count++;  //  count self once
+        st.push({price,count});
+        return count;
+    }
+};

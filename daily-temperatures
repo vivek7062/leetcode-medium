@@ -1,0 +1,29 @@
+// Question - https://leetcode.com/problems/daily-temperatures/
+// Answer in cpp - https://leetcode.com/problems/daily-temperatures/solutions/2796001/c-simple-stack-implementation-o-n/
+
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+Code
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& tem) {
+        vector<int> ans(tem.size());
+        stack<int> st;
+        for(int i=tem.size()-1;i>=0;i--){
+            while(!st.empty() && tem[i]>=tem[st.top()]){
+                st.pop();
+            }
+            if(st.empty()) ans[i]=0;
+            else ans[i]=(st.top()-i);
+            st.push(i);
+        }
+
+        return ans;
+    }
+};

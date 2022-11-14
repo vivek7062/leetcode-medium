@@ -1,0 +1,42 @@
+// Question - https://leetcode.com/problems/find-the-minimum-number-of-fibonacci-numbers-whose-sum-is-k/
+// Answer in cpp
+
+
+
+Approach
+Traverse reverse fibonacci and subtract from k if current number lessthan or equal to k untill k not become 0.
+
+Complexity
+Time complexity:
+O(n)
+
+Space complexity:
+O(1)
+
+Code
+class Solution {
+public:
+    int findMinFibonacciNumbers(int k) {
+        int ans=0;
+        int prev=0,next=1,curr=0;
+        while(curr<=k){
+            curr = prev+next;
+            prev=next;
+            next=curr;
+        }
+        
+        while(k>0 && prev>=1){
+        prev = curr-prev;
+        next = curr-prev;
+        curr = next;
+        if(curr<=k){
+            k-=curr;
+            ans++;
+        }
+        }
+
+        
+
+        return ans;
+    }
+};

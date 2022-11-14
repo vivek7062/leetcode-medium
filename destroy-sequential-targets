@@ -1,0 +1,39 @@
+// Question - https://leetcode.com/problems/destroy-sequential-targets/
+// Answer in cpp
+
+
+Approach
+a+c * space = b
+c * space = b-a
+(c*space)%space = (b-a)%space
+(b-a)%space = 0
+b%space - a%space =0
+a%space = b%space
+
+Complexity
+Time complexity:
+O(n)
+Space complexity:
+O(n)
+Code
+class Solution {
+public:
+    int destroyTargets(vector<int>& nums, int space) {
+        map<int,int> mp;
+        int maxVal=0;
+        int ans=INT_MAX;
+        for(auto& num:nums){
+            mp[num%space]++;
+            maxVal=max(maxVal,mp[num%space]);
+        }
+        
+        for(auto& num:nums){
+            if(mp[num%space]==maxVal){
+                 ans=min(ans,num);
+            }
+        }
+        
+        return ans;
+        
+    }
+};

@@ -1,0 +1,58 @@
+// Question - https://leetcode.com/problems/find-median-from-data-stream/
+// Answer in cpp -> https://leetcode.com/problems/find-median-from-data-stream/solutions/2812919/c-clear-and-concise-simple-heap-solution/
+
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+Code
+class MedianFinder {
+    priority_queue<int> maxHeap;
+    priority_queue<int,vector<int>,greater<int>>  minHeap;
+    int minLen=0,maxLen=0;
+public:
+    MedianFinder() {
+        
+    }
+    
+    void addNum(int num) {
+        if(maxLen==0){
+            maxHeap.push(num);
+            maxLen++;
+        } else{
+            if(maxHeap.top()<num){
+                minHeap.push(num);
+                minLen++;
+            } else{
+                maxHeap.push(num);
+                maxLen++;                
+            }
+            if(abs(minLen-maxLen)>1){
+                if(maxLen>minLen){
+                    minHeap.push(maxHeap.top());
+                    maxHeap.pop();
+                    minLen++;
+                    maxLen--;
+                } else{
+                    maxHeap.push(minHeap.top());
+                    minHeap.pop();
+                    minLen--;
+                    maxLen++;
+                }
+            }
+        }
+    }
+    
+    double findMedian() {
+        if(maxLen>minLen){
+            return maxHeap.top()/1.0;
+        } else if(maxLen<minLen){
+            return minHeap.top()/1.0;
+        }
+        return (maxHeap.top()+minHeap.top())/2.0;
+    }
+};

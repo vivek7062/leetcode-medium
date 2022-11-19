@@ -1,0 +1,36 @@
+// Question - https://leetcode.com/problems/reorder-list/
+// Answer in cpp
+
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+Code
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        if(!head || !head->next || !head->next->next) return;
+        stack<ListNode*> st;
+        ListNode* ptr=head;
+        while(ptr){
+            st.push(ptr);
+            ptr = ptr->next;    
+        }
+        int len = st.size()/2,i=0;
+        ptr = head;
+        while(i++<len){
+            ListNode* temp = st.top();
+            st.pop();
+            temp->next = ptr->next;
+            ptr->next=temp;
+            ptr=ptr->next->next;
+        }
+        ptr->next=NULL;
+
+        
+    }
+};

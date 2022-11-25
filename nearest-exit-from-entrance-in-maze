@@ -1,0 +1,44 @@
+// Question - https://leetcode.com/problems/nearest-exit-from-entrance-in-maze/
+// Answer in cpp
+
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+Code
+class Solution {
+public:
+  int nearestExit(vector<vector<char>>& grid, vector<int>& e) {
+    queue<pair<int,int>> que;
+    int m = grid.size(),n=grid[0].size();
+    vector<vector<int>> dir{{1,0},{-1,0},{0,-1},{0,1}};
+    int level=0;
+    que.push({e[0],e[1]});
+    grid[e[0]][e[1]]='+';
+    while(!que.empty()){
+        level++;
+        int size = que.size();
+        while(size--){
+            pair<int,int> temp = que.front();
+            que.pop();
+            int row = temp.first,col=temp.second;
+            for(int i=0;i<4;i++){
+                int new_row = row+dir[i][0],new_col = col+dir[i][1];
+                if(new_row>=0 && new_col>=0 && new_row<m && new_col<n && grid[new_row][new_col]!='+'){
+                    if(new_row==0 || new_col==0 || new_row==m-1 || new_col==n-1){
+                        return level;
+                    }
+                    que.push({new_row,new_col});
+                    grid[new_row][new_col] = '+';
+                }
+            }
+        }
+    }
+
+    return -1;
+  }
+};

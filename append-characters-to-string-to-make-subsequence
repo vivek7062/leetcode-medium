@@ -1,0 +1,20 @@
+// Question - https://leetcode.com/problems/append-characters-to-string-to-make-subsequence/
+// Answer in cpp
+
+class Solution {
+public:
+    int appendCharacters(string s, string t) {
+        int left=0,right=0,len1=s.size(),len2=t.size();
+        
+        while(left<len1 && right<len2){
+            if(s[left]==t[right]){
+                left++;
+                right++;
+            } else{
+                left++;
+            }
+        }
+        
+        return len2-right;
+    }
+};

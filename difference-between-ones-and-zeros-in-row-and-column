@@ -1,0 +1,31 @@
+// Question - https://leetcode.com/problems/difference-between-ones-and-zeros-in-row-and-column/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<vector<int>> onesMinusZeros(vector<vector<int>>& grid) {
+        vector<vector<int>> ans=grid;
+        map<int,int> onerow,onecol,zerorow,zerocol;
+        int row = grid.size(),col=grid[0].size();
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]==0){
+                    zerorow[i]++;
+                    zerocol[j]++;
+                } else if(grid[i][j]==1){
+                    onerow[i]++;
+                    onecol[j]++;
+                }
+            }
+        }
+        
+         for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                ans[i][j] = onerow[i]+onecol[j]-zerorow[i]-zerocol[j];
+            }
+         }
+        
+        return ans;
+    }
+};

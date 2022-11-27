@@ -1,0 +1,65 @@
+// Question - https://leetcode.com/problems/minimum-penalty-for-a-shop/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int bestClosingTime(string customers) {
+        int ans=0;
+        vector<int> leftn,righty;
+        int county=0,countn=0;
+        for(int i=0;i<customers.size();i++){
+            if(customers[i]=='Y'){
+                county++;
+            } else{
+                countn++;
+            }
+            leftn.push_back(countn);
+        }
+        county=0;
+        countn=0;
+        righty = leftn;
+        int flag=1;
+        int count=0;
+        for(int i=customers.size()-1;i>=0;i--){
+            if(customers[i]=='Y'){
+                county++;
+            } else{
+                countn++;
+            }
+            righty[i]=county;
+            if(flag&&customers[i]=='N' ){
+                count++;
+            } else{
+                flag=0;
+            }
+        }
+        int val = INT_MAX;
+        flag=0;
+         for(int i=0;i<customers.size();i++){
+             int pen=0;
+             if(i==0){
+                 pen = righty[i];
+             }else{
+                pen = righty[i]+leftn[i];
+                 if(customers[i]=='N'){
+                    pen--;
+                 }
+                 
+             }
+             if(pen<val){
+                 ans=i;
+                 val=pen;
+             }
+             
+         }
+       int pen = leftn[customers.size()-1];
+            if(pen<val){
+                 ans=customers.size();;
+                 val=pen;
+             }
+        
+        
+        return ans;
+    }
+};

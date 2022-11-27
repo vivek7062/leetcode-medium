@@ -1,0 +1,18 @@
+// Question - https://leetcode.com/problems/remove-nodes-from-linked-list/
+// Answer in cpp
+
+
+class Solution {
+public:
+    ListNode* removeNodes(ListNode* head) {
+        return deletenode(head);
+    }
+    
+    ListNode* deletenode(ListNode* head){
+         if(head == NULL || head->next == NULL) return head;
+         ListNode* nextNode = deletenode(head->next);
+         if(nextNode->val > head->val) return nextNode;
+         head->next = nextNode;
+         return head;
+    }
+};

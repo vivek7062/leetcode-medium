@@ -1,0 +1,21 @@
+// Question - https://leetcode.com/problems/sort-characters-by-frequency/
+// Answer in cpp
+
+
+class Solution {
+public:
+    string frequencySort(string s) {
+        string ans="";
+        vector<vector<int>> temp;
+        for(int i=0;i<123;i++) temp.push_back({i,0});
+        for(auto& ch:s) temp[ch][1]++;
+        sort(temp.begin(),temp.end(),sortByFreq);
+        for(int i=0;i<123;i++){
+            if(temp[i][1])ans=ans+string(temp[i][1],temp[i][0]);
+        }
+        return ans;
+    }
+    static bool sortByFreq(const vector<int> &v1 ,const vector<int> &v2){
+        return v2[1]<v1[1];
+    }
+};

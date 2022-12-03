@@ -1,0 +1,31 @@
+// Question - https://leetcode.com/problems/determine-if-two-strings-are-close/
+// Answer in cpp
+
+class Solution {
+public:
+    bool closeStrings(string word1, string word2) {
+        map<int,int> mp1,mp2;
+        priority_queue<int> pq1,pq2;
+        int len1=word1.size(),len2=word2.size(),i=0;
+        if(len1!=len2) return false;
+        while(i<len1){
+            mp1[word1[i]]++;
+            mp2[word2[i++]]++;
+        }
+        for(auto& m:mp1){
+            if(mp2[m.first]==0) return false;
+            pq1.push(m.second);
+        }
+        for(auto& m:mp2){
+            if(mp1[m.first]==0) return false;
+            pq2.push(m.second);
+        }
+        if(pq1.size()!=pq2.size()) return false;
+        while(!pq1.empty()){
+            if(pq1.top()!=pq2.top()) return false;
+            pq1.pop();
+            pq2.pop();
+        }
+        return true;
+    }
+};

@@ -1,0 +1,39 @@
+// Question - https://leetcode.com/problems/maximum-product-of-splitted-binary-tree/
+// Answer in cpp
+
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(H)
+H is height of tree
+
+Code
+
+class Solution {
+    long sum=0;
+    long ans=0;
+    int mod = 1e9+7;
+public:
+    int maxProduct(TreeNode* root) {
+        sum = totalSum(root);
+        dfs(root);
+        return ans%mod;
+    }
+    int totalSum(TreeNode* root){
+        if(!root) return 0;
+        return root->val+ totalSum(root->left) + totalSum(root->right);
+    }
+
+    int dfs(TreeNode* root){
+        if(!root) return 0;
+        int subtree_sum=0;
+        subtree_sum+= dfs(root->left);
+        subtree_sum+= dfs(root->right);
+        subtree_sum+= root->val;
+        ans = max(ans, subtree_sum*(sum-subtree_sum));
+        return subtree_sum;
+    }
+};

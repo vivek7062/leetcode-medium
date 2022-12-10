@@ -1,0 +1,46 @@
+// Question - https://leetcode.com/problems/sum-of-subarray-minimums/
+// Answer in cpp
+
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+Code
+class Solution {
+public:
+    int sumSubarrayMins(vector<int>& arr) {
+        int ans=0;
+        int mod = 1e9+7;
+        int len = arr.size();
+        vector<long> prevMax(len,0);
+        vector<long> nextMax = prevMax;
+        stack<pair<int,int>> st1,st2;
+        for(int i=0;i<len;i++){
+            int count=1;
+            while(!st1.empty() && st1.top().first>arr[i]){
+                count+=st1.top().second;
+                st1.pop();
+            }
+            prevMax[i] = count;
+            st1.push({arr[i],count});
+           
+        }
+        for(int i=len-1;i>=0;i--){
+            int count=1;
+            while(!st2.empty() && st2.top().first>=arr[i]){
+                count+=st2.top().second;
+                st2.pop();
+            }
+            nextMax[i] = count;
+            st2.push({arr[i],count});
+        }
+        for(int i=0;i<len;i++){
+            ans = (ans+prevMax[i]*nextMax[i]*arr[i])%mod;
+        }
+        return ans;
+    }
+};

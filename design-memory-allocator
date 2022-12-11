@@ -1,0 +1,43 @@
+// Question - https://leetcode.com/problems/design-memory-allocator/
+// Answer in cpp
+
+
+class Allocator {
+    int len=0;
+    vector<int> vec;
+    int index=0,maxIndex=0;
+public:
+    Allocator(int n) {
+        len = n;
+        vec = vector(n,0);
+    }
+    
+    int allocate(int size, int mID) {
+        int count=0;
+        for(int i=0;i<len;i++){
+            if(vec[i]==0) count++;
+            else count=0;
+                if(count==size){
+                    maxIndex = max(maxIndex,i);
+                    while(size--) vec[i--]=mID;
+                    return i+1;
+                    break;
+                }
+        }
+        
+        
+        return -1;
+    }
+    
+    int free(int mID) {
+        int count=0;
+        for(int i=maxIndex;i>=0;i--){
+            if(vec[i]==mID){
+                count++;
+                vec[i]=0;
+                if(i==maxIndex) maxIndex--;
+            }
+        }
+        return count;
+    }
+};

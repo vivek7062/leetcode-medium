@@ -1,0 +1,25 @@
+// Question - https://leetcode.com/problems/longest-square-streak-in-an-array/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int longestSquareStreak(vector<int>& nums) {
+        int row = nums.size();
+        sort(nums.begin(),nums.end());
+        int ans=0;
+        map<long long int,int> mp;
+        for(auto& num:nums) mp[num]++;
+        for(int i=0;i<row;i++){
+            long long int val=nums[i];
+            int count=0;
+            while(mp[val]>0){
+                    count++;
+                    mp[val]--;
+                    val = pow(val,2);  
+            }
+            ans = max(ans,count);
+        }
+        return ans>=2?ans:-1;
+    }
+};

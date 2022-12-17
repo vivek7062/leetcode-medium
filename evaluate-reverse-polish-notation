@@ -1,0 +1,52 @@
+// Question - https://leetcode.com/problems/evaluate-reverse-polish-notation/
+// Answer in cpp
+
+
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+Code
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        int ans=0;
+        stack<long long int> st;
+        for(auto &s: tokens){
+            if(s=="+"){
+                int first = st.top();
+                st.pop();
+                int second = st.top();
+                st.pop();
+                st.push(first+second);
+            } else if(s=="-"){
+                int first = st.top();
+                st.pop();
+                int second = st.top();
+                st.pop();
+                st.push(second-first);
+            } else if(s=="/"){
+                int first = st.top();
+                st.pop();
+                int second = st.top();
+                st.pop();
+                st.push(second/first);  
+            } else if(s=="*"){
+                int first = st.top();
+                st.pop();
+                int second = st.top();
+                st.pop();
+                long long int temp  = (first*1ll)*(second*1ll);
+                st.push(temp);
+            } else{
+                st.push(stoi(s));
+            }
+        }
+
+        return st.top();
+    }
+};

@@ -1,0 +1,32 @@
+// Question - https://leetcode.com/problems/can-convert-string-in-k-moves/
+// Answer in cpp
+
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+Code
+class Solution {
+public:
+    bool canConvertString(string s, string t, int k) {
+        if(s.size()!=t.size()) return false;
+        int end= s.size()-1, start = 0;
+        map<int,int> mp;
+        while(start<=end){
+            int diff = (t[start]-s[start]+26)%26; //for negative difference
+            if(diff!=0){
+                int mul = mp[diff];
+                long long val = diff+ (26*mul);
+                if(val<=k) mp[diff]++; 
+                else return false;
+            }
+            start++;
+        }
+        
+        return true;
+    }
+};

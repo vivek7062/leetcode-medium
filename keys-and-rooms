@@ -1,0 +1,35 @@
+// Question - https://leetcode.com/problems/keys-and-rooms/
+// Answer in cpp
+
+
+class Solution {
+public:
+    bool canVisitAllRooms(vector<vector<int>>& rooms) {
+        int row = rooms.size();
+        vector<int> visited(row,0);
+        queue<int> que;
+        for(int i=0;i<rooms[0].size();i++){
+            que.push(rooms[0][i]);
+        }
+        visited[0] = 1;
+        while(!que.empty()){
+            int size = que.size();
+            while(size--){
+                int key = que.front();
+                visited[key]=1;
+                que.pop();
+                for(auto& val: rooms[key]){
+                    if(visited[val]==0){
+                        que.push(val);
+                    }
+                }
+            }
+        }
+
+        for(auto& visit : visited){
+            if(visit==0) return false;
+        }
+
+        return true;
+    }
+};

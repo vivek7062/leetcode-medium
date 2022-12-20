@@ -1,0 +1,26 @@
+// Question - https://leetcode.com/problems/minimum-falling-path-sum/
+// Answer in cpp
+
+
+class Solution {
+     int ans = INT_MAX;
+     vector<vector<int>> dp;
+public:
+    int minFallingPathSum(vector<vector<int>>& matrix) {
+        int row = matrix.size(), col = matrix[0].size();
+        dp = vector(row+1,vector(col+1,-1));
+        for(int i=0;i<col;i++){
+            ans = min(ans,dfs(matrix,0,i,row,col));
+        }
+        return ans;
+    }
+    int dfs(vector<vector<int>>& matrix, int i, int j, int row, int col){
+        if(i==row) return 0;
+        if(j<0 || j>=col ) return INT_MAX;
+        if(dp[i][j]!=-1) return dp[i][j];
+        int first = dfs(matrix,i+1,j-1,row,col);
+        int second = dfs(matrix,i+1,j,  row,col);
+        int third = dfs(matrix,i+1,j+1,row,col);
+        return dp[i][j]=matrix[i][j]+min(first,min(second,third));
+    }
+};

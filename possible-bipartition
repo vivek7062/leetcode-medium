@@ -1,0 +1,48 @@
+// Question - https://leetcode.com/problems/possible-bipartition/
+// Answer in cpp
+
+
+Complexity
+Time complexity:
+O(V+E)
+Space complexity:
+O(N)
+Code
+class Solution {
+public:
+    bool possibleBipartition(int n, vector<vector<int>>& dislikes) {
+        vector<vector<int>> vec(n+1,vector(0,0));
+        vector<int> visited(n+1,0);
+        vector<int> colors(n+1,-1);
+        for(auto& val: dislikes){
+            vec[val[0]].push_back(val[1]);
+            vec[val[1]].push_back(val[0]);
+        }
+        
+        for(int i=1;i<=n;i++){
+            if(visited[i]==0){
+                queue<int> que;
+                que.push(i);
+                visited[i] =1;
+                colors[i] = 0;
+                while(!que.empty()){
+                    int size = que.size();
+                    while(size--){
+                        int node = que.front();
+                        que.pop();
+                        int color = colors[node];
+                        for(auto temp: vec[node]){
+                            if(visited[temp]==0){
+                                colors[temp] = color==0?1:0;
+                                visited[temp]=1;
+                                que.push(temp);
+                            } else if(color==colors[temp]) return false;
+                        }
+                    }
+                 }
+            }
+        }
+
+        return true;
+    }
+};

@@ -26,8 +26,6 @@ public:
                 visited[i] =1;
                 colors[i] = 0;
                 while(!que.empty()){
-                    int size = que.size();
-                    while(size--){
                         int node = que.front();
                         que.pop();
                         int color = colors[node];
@@ -38,7 +36,7 @@ public:
                                 que.push(temp);
                             } else if(color==colors[temp]) return false;
                         }
-                    }
+                    
                  }
             }
         }

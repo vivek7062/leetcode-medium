@@ -1,0 +1,32 @@
+// Question -  https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/
+// Answer in cpp
+
+
+Approach
+Calculate required roacks for each capacity and store in MIN priority queue.
+So top of pq will be smallest value and we will subtract top value from additional roack until additional roacks not become 0 and pq not becomes empty.
+Count how many value we poped from pq and return that count
+Complexity
+Time complexity:
+O(N)
+Space complexity:
+O(N)
+Code
+class Solution {
+public:
+    int maximumBags(vector<int>& capacity, vector<int>& rocks, int additionalRocks) {
+        int ans = 0;
+        priority_queue<int> pq;
+        int len = capacity.size();
+        for(int i=0;i<len;i++){
+            int need = capacity[i]-rocks[i];
+            pq.push(-need);
+        }
+        while(!pq.empty() && additionalRocks>=0 && (-pq.top())<=additionalRocks){
+            additionalRocks+=pq.top();
+            ans++;
+            pq.pop();
+        }
+        return ans;
+    }
+};

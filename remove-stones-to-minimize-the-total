@@ -1,0 +1,22 @@
+// Question - https://leetcode.com/problems/remove-stones-to-minimize-the-total/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    int minStoneSum(vector<int>& piles, int k) {
+        int ans = 0;
+        priority_queue<int> pq(piles.begin(),piles.end());
+        while(k--){
+           int val = pq.top();
+           pq.pop();
+           pq.push(val-(val/2));
+        }
+        while(!pq.empty()){
+            ans+=pq.top();
+            pq.pop();
+        }
+        return ans;
+    }
+};

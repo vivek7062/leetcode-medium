@@ -1,0 +1,25 @@
+// Question - https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int findMinArrowShots(vector<vector<int>>& points) {
+        sort(points.begin(),points.end(),customSort);
+        int arrow = 1, endPoint = points[0][1], row = points.size();
+        for(int i=1;i<row;i++){
+            if(points[i][0]<=endPoint && points[i][1]>=endPoint){
+                continue;
+            }
+            else{
+                endPoint = points[i][1];
+                arrow++;
+            }
+        }
+        return arrow;
+    }
+
+    bool static customSort(const vector<int>& v1, const vector<int> &v2){
+        return v1[1]<v2[1];
+    }
+};

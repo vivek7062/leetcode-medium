@@ -1,0 +1,37 @@
+// Question - https://leetcode.com/problems/maximum-ice-cream-bars/
+// Answer in cpp
+
+
+Code
+1.
+class Solution {
+public:
+    int maxIceCream(vector<int>& costs, int coins) {
+        priority_queue<int> pq;
+        for(int i=0;i<costs.size();i++){
+            if(costs[i]<=coins){
+                coins-=costs[i];
+                pq.push(costs[i]);
+            } else if(!pq.empty() && pq.top()>costs[i]){
+                coins+=(pq.top()-costs[i]);
+                pq.pop();
+                pq.push(costs[i]);
+            }
+        }
+        return pq.size();
+    }
+};
+2.
+ class Solution {
+ public:
+     int maxIceCream(vector<int>& costs, int coins) {
+         int ans=0;
+         priority_queue<int,vector<int>,greater<int>> pq(costs.begin(),costs.end());
+         while(!pq.empty() && pq.top()<=coins){
+             coins-=pq.top();
+             ans++;
+             pq.pop();
+         } 
+         return ans;
+     }
+ };

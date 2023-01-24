@@ -1,0 +1,28 @@
+// Question - https://leetcode.com/problems/non-decreasing-subsequences/
+// Answer in cpp
+
+
+class Solution {
+    vector<vector<int>> ans;
+    map<vector<int>, int> mp;
+public:
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        vector<int> temp;
+        dfs(nums,temp,0,nums.size());
+        return ans;
+    }
+    void dfs(vector<int>& nums,vector<int>& temp, int index, int len){
+        int size = temp.size();
+        if(size>=2) {
+            if(mp[temp]==0) ans.push_back(temp);
+            mp[temp]++;
+        }
+        if(index==len) return ;
+        if(size==0 || nums[index]>=temp[size-1]){
+            temp.push_back(nums[index]);
+            dfs(nums,temp,index+1,len);
+            temp.pop_back();
+        } 
+        dfs(nums,temp,index+1,len);
+    }
+};

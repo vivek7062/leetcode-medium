@@ -1,0 +1,45 @@
+// Question - https://leetcode.com/problems/find-closest-node-to-given-two-nodes/
+// Answer in cpp
+
+
+
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(N)
+
+Code
+class Solution {
+    
+public:
+    int closestMeetingNode(vector<int>& edges, int node1, int node2) {
+        int ans = -1;
+        int minVal= INT_MAX;
+        vector<int> dis_node1(edges.size(),-1);
+        vector<int> dis_node2(edges.size(),-1);
+        vector<bool> visited(edges.size(),false);
+        dfs(edges,node1,visited,dis_node1,0);
+        visited = vector(edges.size(),false);
+        dfs(edges,node2,visited,dis_node2,0);
+        for(int i=0;i<edges.size();i++){
+            if(dis_node2[i]!=-1 && dis_node1[i]!=-1){
+                int maxVal = max(dis_node1[i],dis_node2[i]);
+                if(maxVal<minVal){
+                    minVal = maxVal;
+                    ans = i;
+                }
+            }
+        }
+        return ans;
+    }
+    void dfs(vector<int>& edges, int node,vector<bool> &visited, vector<int>& dis_node,  int distance ){
+        if(node!=-1 && !visited[node]){
+            visited[node] = true;
+            dis_node[node] = distance;
+            dfs(edges,edges[node],visited,dis_node,distance+1);
+        }
+    }
+};

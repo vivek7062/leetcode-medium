@@ -1,0 +1,51 @@
+// Question - https://leetcode.com/problems/flip-string-to-monotone-increasing/
+// Answer in cpp
+
+
+Approach
+As we know if in start of string have 0's then we don't need to flip anything and in end of string have 1's then also we don't need to flip anything
+so we takes two variable
+startingZeroManage to decide we should choose 0 or 1 in start of string if oneflip morethan zeroFlip then we decide to convert in 0 because zeroFlip is less so we will add zeroFlip to startingZeroManage and will make zeroFlip and oneFlip 0
+
+lastOneManage calculate consucative 1's in last of string
+because if in last have some consucative one's then we did't neet to change anything
+
+and oneFlip and zeroFlip we are calculating from first 1
+because if is there any zero before this then we don't need to change anything
+
+Comment below if you have any suggestion or issue
+Thank you
+
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(1)
+
+Code
+class Solution {
+public:
+    int minFlipsMonoIncr(string s) {
+        int zeroFlip = 0, oneFlip = 0, flag = 0, len = s.size(), lastOneManage=0,startingZeroManage=0;
+        for(int i=0; i<len; i++){
+            if(s[i]=='1') flag=1;
+            if(flag){
+                if(s[i]=='1'){
+                    oneFlip++;
+                    lastOneManage++;
+                } else{
+                    zeroFlip++;
+                    lastOneManage=0;
+                }
+                if(zeroFlip>oneFlip){
+                    startingZeroManage += oneFlip;
+                    zeroFlip = 0;
+                    oneFlip = 0;
+                }
+            }
+        }
+        oneFlip-=lastOneManage;
+        return min(zeroFlip,oneFlip)+startingZeroManage;
+    }
+};

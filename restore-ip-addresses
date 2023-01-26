@@ -1,0 +1,41 @@
+// Question - https://leetcode.com/problems/restore-ip-addresses/
+// Answer in cpp
+
+
+class Solution {
+    vector<string> ans;
+public:
+    vector<string> restoreIpAddresses(string s) {
+        if(s.size()>12 || s.size()<4) return {};
+        string ip = "";
+        dfs(s,0,0,ip);
+        return ans;
+    }
+    void dfs(string &s,int index,int part, string ip){
+        if(index==s.size() && part==4) {
+            ip = ip.substr(0, ip.size()-1);
+            ans.push_back(ip);
+            return;
+        }
+        if(index==s.size() || part==4){
+            return ;
+        }
+        dfs(s,index+1,part+1,ip+s[index]+'.');
+        if(s.size()>index+1 && isValid(s.substr(index,2))){
+            dfs(s,index+2,part+1,ip+s.substr(index,2)+'.');
+        }
+        if(s.size()>index+2 && isValid(s.substr(index,3))){
+            dfs(s,index+3,part+1,ip+s.substr(index,3)+'.');
+        }
+       
+    }
+
+    bool isValid(string s){
+        int len = s.size();
+        if(len==1) return true;
+        if(len>3 || s[0]=='0') return false;
+        int temp = stoi(s);
+        if(temp>255) return false;
+        return true;
+    }
+};

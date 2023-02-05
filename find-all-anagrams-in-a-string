@@ -1,0 +1,22 @@
+// Question - https://leetcode.com/problems/find-all-anagrams-in-a-string/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> ans;
+        vector<int> pstr(26,0);
+        vector<int> substr(26,0);
+        for(auto& ch:p) pstr[ch-'a']++;
+        int len1 = p.size(),len2 = s.size();
+        int start=0,end=0;
+        while(end<len2){
+            substr[s[end]-'a']++;
+            if(end-start>=len1) substr[s[start++]-'a']--;
+            if(end-start==len1-1 && pstr==substr) ans.push_back(start);
+            end++;
+        }
+        return ans;
+    }
+};

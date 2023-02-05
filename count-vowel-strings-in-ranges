@@ -1,0 +1,30 @@
+// Question - https://leetcode.com/problems/count-vowel-strings-in-ranges/
+// Answer in cpp
+
+class Solution {
+public:
+    vector<int> vowelStrings(vector<string>& words, vector<vector<int>>& queries) {
+        vector<int> prefix;
+        vector<int> ans;
+        
+        for(int i=0;i<words.size();i++){
+            if(isVowel(words[i])) prefix.push_back(1);
+            else prefix.push_back(0);
+            if(i>0)prefix[i]+=prefix[i-1];
+        }
+        for(auto& range:queries ){
+            int start = range[0], end = range[1];
+            if(start==0) ans.push_back(prefix[end]);
+            else ans.push_back(prefix[end]-prefix[start-1]);
+        }
+        return ans;
+    }
+    
+    bool isVowel(string &s){
+        int size = s.size()-1;
+        if((s[0]=='a' || s[0]=='e' || s[0]=='i' || s[0]=='o' || s[0]=='u') && (s[size]=='a' || s[size]=='e' || s[size]=='i' || s[size]=='o' || s[size]=='u')){
+            return  true;
+        }
+        return false;
+    }
+};

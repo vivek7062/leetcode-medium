@@ -1,0 +1,36 @@
+// Question - https://leetcode.com/problems/fruit-into-baskets/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    int totalFruit(vector<int>& fruits) {
+        if(fruits.size()<3) return fruits.size();
+        int ans = 0;
+        map<int,int> mp;
+        int start = 0,end = 0, len = fruits.size(),prev=-1,freq=0;
+        while(end<len){
+            mp[fruits[end]]++;
+            if(fruits[end]==prev) freq++;
+            else{
+                prev = fruits[end];
+                freq = 1;
+            }
+            if(mp.size()==2){
+                int count=0;
+                for(auto& m:mp) count+=m.second;
+                if(end<len-1 && mp.find(fruits[end+1])==mp.end()){
+                    mp = map<int,int>();
+                    mp[prev] = freq;
+                }
+                ans = max(ans,count);
+            }
+            end++;
+        }
+
+        if(mp.size()==1 && ans==0) return fruits.size();
+
+        return ans;
+    }
+};

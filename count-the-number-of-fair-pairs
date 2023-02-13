@@ -1,0 +1,49 @@
+// Question - https://leetcode.com/problems/count-the-number-of-fair-pairs/
+// Answer in cpp
+
+
+
+Approach
+If we find all pair which sum is less than or equal to upper and find all pair which sum is only less that lower then answer will be lessUpper - lessLower
+First will we sort all element then we can calculate lessUpper and lessLower in O(N) time complexity
+Lets take example
+Ex. 0,1,4,4,5,7 (After Sort) and lower=3 and upper=6
+Now need to find all pair which sum has less or equal 6
+and will store in lessUpper = 7
+Now need to find all pair which sum has less or equal 6
+and will store in lessLower = 1
+
+Now answer will be lessUpper-lessLower = 6
+
+Complexity
+Time complexity:
+O(NlogN)
+
+Space complexity:
+O(1)
+
+Code
+class Solution {
+public:
+    long long countFairPairs(vector<int>& nums, int lower, int upper) {
+        long long ans = 0,lessLower=0,lessUpper=0;
+        sort(nums.begin(),nums.end());
+        int len = nums.size();
+        int start =0, end=len-1;
+        while(start<end){ // find all pair which sum has less or equal upper
+            if(nums[start]+nums[end]<=upper){
+                lessUpper+=end-start;
+                start++;
+            }else end--;
+        }
+        start =0, end = len-1;
+        while(start<end){ // find all pair which sum has less lower
+            if(nums[start]+nums[end]<lower){
+                lessLower+=end-start;
+                start++;
+            }else end--;
+        }
+        return lessUpper-lessLower;
+    }
+};
+F

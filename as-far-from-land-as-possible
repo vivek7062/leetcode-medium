@@ -1,0 +1,42 @@
+// Question - https://leetcode.com/problems/as-far-from-land-as-possible/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int maxDistance(vector<vector<int>>& grid) {
+        int ans =-1;
+        vector<vector<int>> dirs={{0,1},{0,-1},{1,0},{-1,0}};
+        map<pair<int,int>,int> visited;
+        queue<pair<int,int>> que;
+        int row = grid.size(), col = grid[0].size();
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]==1) {
+                    visited[{i,j}] = 1;
+                    que.push({i,j});
+                }
+            }
+        }
+        if(que.size()==0 || que.size()==row*col) return -1;
+        while(!que.empty()){
+            ans++;
+            int s = que.size();
+            while(s--){
+                pair<int,int> index = que.front();
+                que.pop();
+                int first = index.first,second=index.second;
+                for(int i=0;i<4;i++){
+                    int newRow  = first+dirs[i][0], newCol = second+dirs[i][1];
+                   if(newRow<0 || newCol<0 || newRow>=row || newCol>=col || visited[{first+dirs[i][0],second+dirs[i][1]}]) continue;
+                        visited[{newRow,newCol}] = 1;
+                        que.push({newRow,newCol});
+                    
+                }
+            }
+        }
+        
+        return ans;
+
+    }
+};

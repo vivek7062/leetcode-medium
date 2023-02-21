@@ -1,0 +1,48 @@
+// Question - https://leetcode.com/problems/single-element-in-a-sorted-array/
+// Answer in cpp
+
+
+Binary Search
+Complexity
+Time complexity:
+O(Log N)
+
+Space complexity:
+O(1)
+
+Code
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        int start = 0, end = nums.size()-1, len = end;
+        if(len==1) return nums[0];
+        while(start<=end){
+            int mid = start + (end-start)/2;
+            if(mid==0 || mid==len) return nums[mid];
+            if(nums[mid]==nums[mid+1]){
+                if(mid%2!=0) end = mid-1;
+                else start = mid+2;
+            } else if(nums[mid]==nums[mid-1]){
+                if(mid%2!=0) start = mid+1;
+                else end = mid-2;
+            } else return nums[mid];
+        }
+        return -1;
+    }
+};
+Binary Search
+Complexity
+Time complexity:
+O(N)
+
+Space complexity:
+O(1)
+
+ class Solution {
+ public:
+     int singleNonDuplicate(vector<int>& nums) {
+         int ans = 0;
+         for(auto& num:nums) ans = ans^num;
+         return ans;
+     }
+ };

@@ -1,0 +1,31 @@
+// Question - https://leetcode.com/problems/find-the-maximum-number-of-marked-indices/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    int maxNumOfMarkedIndices(vector<int>& nums) {
+        int len = nums.size();
+        vector<int> visited(len,0);
+        sort(nums.begin(),nums.end());
+        int start=0,end=len/2;
+        
+        while(start<end && end<len){
+            if(visited[start]==1) {
+                start++;
+                continue;
+            }
+            if(nums[start]*2<=nums[end]){
+                visited[start++]=1;
+                visited[end++]=1;
+                continue;
+            }
+            if(nums[start]*2>nums[end]){
+                end++;
+            }
+        }
+        
+        return accumulate(visited.begin(), visited.end(), 0);
+    }
+};

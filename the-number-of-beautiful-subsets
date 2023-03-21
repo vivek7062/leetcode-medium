@@ -1,0 +1,25 @@
+// Question - https://leetcode.com/problems/the-number-of-beautiful-subsets/
+// Answer in cpp
+
+
+class Solution {
+    int freq[1001];
+public:
+    int beautifulSubsets(vector<int>& nums, int k) {
+        memset(freq,0,sizeof(freq));
+        sort(nums.begin(),nums.end());
+        return dfs(nums,0,k)-1; // minus empty set
+    }
+
+    int dfs(vector<int>& nums, int index, int k){
+        if(index>=nums.size()) return 1;
+        int subset = 0;
+        if(nums[index]-k<0 || freq[nums[index]-k]==0){
+            freq[nums[index]]++;
+            subset+=dfs(nums,index+1,k);
+            freq[nums[index]]--;
+        }
+        subset+=dfs(nums,index+1,k);
+        return subset;
+    }
+};

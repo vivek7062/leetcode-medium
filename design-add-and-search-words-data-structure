@@ -1,0 +1,54 @@
+// Question - https://leetcode.com/problems/design-add-and-search-words-data-structure/
+// Answer in cpp
+
+
+
+class Trie{
+    public:
+    Trie* child[26];
+    bool isEnd = false;
+};
+class WordDictionary {
+    Trie* trie;
+public:
+    WordDictionary() {
+        trie = new Trie();
+    }
+    
+    void addWord(string word) {
+        Trie* node = trie;
+        for(auto& ch: word) {
+            if(node->child[ch-'a']==NULL){
+                node->child[ch-'a'] = new Trie();
+            }
+             node = node->child[ch-'a'];
+        }
+        node->isEnd = true;
+    }
+    
+    bool search(string word) {
+        
+        return isFind(word,0,trie);
+    }
+
+    bool isFind(string &word,int index,Trie* node){
+        if(node==NULL) return false;
+        if(index>=word.size())return node->isEnd;
+        char c = word[index];
+        if(c=='.'){
+            for(int i=0;i<26;i++){
+                if(isFind(word,index+1,node->child[i])) return true;
+            }
+        }else{
+           if(isFind(word,index+1,node->child[c-'a'])) return true;
+        }
+        return false;
+    }
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */

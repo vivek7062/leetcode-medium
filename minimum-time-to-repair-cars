@@ -1,0 +1,29 @@
+// Question - https://leetcode.com/problems/minimum-time-to-repair-cars/
+// Answer in cpp
+
+
+class Solution {
+public:
+    long long repairCars(vector<int>& ranks, int cars) {
+       long long mid;
+       long long low = 1; 
+       long long high = 1e14; 
+       while(low<high){
+           mid = low + (high-low)/2;
+           if(checkValid(ranks,cars,mid)){
+               high = mid;
+           }else low = mid+1; 
+       }
+
+       return low;
+    }
+
+    bool checkValid(vector<int>& ranks,int cars,long long mid){
+        long long car = 0;
+        for(auto& val:ranks){
+            long long temp = mid/val;
+            car+=sqrt(temp);
+        }
+        return car>=cars;
+    }
+};

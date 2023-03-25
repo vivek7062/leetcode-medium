@@ -1,0 +1,48 @@
+// Question - https://leetcode.com/problems/count-unreachable-pairs-of-nodes-in-an-undirected-graph/
+// Answer in cpp
+
+
+
+
+class Solution {
+public:
+    long long countPairs(int n, vector<vector<int>>& edges) {
+        long long ans = 0;
+        vector<bool> visited(n,false);
+        vector<vector<int>> vec(n,vector<int>());
+        for(auto& val: edges){
+            vec[val[0]].push_back(val[1]);
+            vec[val[1]].push_back(val[0]);
+        }
+        for(int i=0;i<n;i++){
+            if(!visited[i]){
+                queue<int> que;
+                set<int> st;
+                que.push(i);
+                st.insert(i);
+                while(!que.empty()){
+                    int node = que.front();
+                    que.pop();
+                    visited[node] = true;
+                    for(auto& nodes:vec[node]){
+                        if(!visited[nodes]){
+                            visited[nodes] = true;
+                            que.push(nodes);
+                            st.insert(nodes);
+                           
+                        }
+                    }
+                   
+                }
+                int len = st.size();
+                int count=1;
+                int max=n-1;
+                 for(auto& val:st){
+                    ans+= (max-val-(len-count));
+                    count++;
+                 }
+            }
+        }
+        return ans;
+    }
+};

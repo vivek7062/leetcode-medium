@@ -1,0 +1,33 @@
+// Question - https://leetcode.com/problems/minimum-cost-for-tickets/
+// Answer in cpp
+
+
+
+class Solution {
+  vector<int> dp;
+public:
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+      dp = vector(days.size(),-1);
+        return dfs(days,costs,0);
+    }
+    int dfs(vector<int>& days, vector<int>& costs, int index){
+        if(index>=days.size()) return 0;
+        int oneDayPass = costs[0]+dfs(days,costs,index+1);
+        int k=index;
+        if(dp[index]!=-1) return dp[index];
+        for(;k<days.size();k++){
+          if(days[k]>=days[index]+7){
+            break;
+          }
+        }
+        int sevenDayPass = costs[1]+dfs(days,costs,k);
+        
+         for(;k<days.size();k++){
+          if(days[k]>=days[index]+30){
+            break;
+          }
+        }
+        int thirtyDayPass = costs[2]+dfs(days,costs,k);
+        return dp[index] = min(oneDayPass,min(sevenDayPass,thirtyDayPass));
+    }
+};

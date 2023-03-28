@@ -1,0 +1,28 @@
+// Question - https://leetcode.com/problems/linked-list-random-node/
+// Answer in cpp
+
+
+
+class Solution {
+    ListNode* list;
+    int len = 0;
+    
+public:
+    Solution(ListNode* head) {
+        list = head;
+        while(head){
+            len++;
+            head = head->next;
+        }
+    }
+    
+    int getRandom() {
+        ListNode* temp = list;
+        int index = rand()%len;
+        for(int i=0;i<index;i++){
+            temp=temp->next;
+        }
+        return temp->val;
+    }
+};
+

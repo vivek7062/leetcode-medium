@@ -1,0 +1,39 @@
+// Question - https://leetcode.com/problems/construct-quad-tree/
+// Answer in cpp
+
+
+class Solution {
+public:
+    Node* construct(vector<vector<int>>& grid) {
+        int row = grid.size(), col = grid[0].size();
+        return dfs(grid,0,0,row-1,col-1);
+    }
+
+    Node* dfs(vector<vector<int>>& grid,int is,int js,int ie,int je){
+        pair<int,int> pr = checkLeaf(grid,is,js,ie,je);
+        int val = pr.first, leaf = pr.second;
+
+        Node* node = new Node(val,leaf);
+        if(!leaf){
+            int x = (ie-is)/2;
+            node->topLeft = dfs(grid,is,js,is+x,js+x);
+            node->topRight = dfs(grid,is,js+x+1,is+x,je);
+            node->bottomLeft = dfs(grid,is+x+1,js,ie,js+x);
+            node->bottomRight = dfs(grid,is+x+1,js+x+1,ie,je);
+        }
+        return node;
+    }
+
+    pair<int,int> checkLeaf(vector<vector<int>>& grid,int p,int q,int row,int col){
+        map<int,int> mp;
+        int val;
+        for(int i=p;i<=row;i++){
+            for(int j=q;j<=col;j++){
+                val = grid[i][j];
+                mp[val]++;
+                if(mp.size()>1) return {1,0};
+            }
+        }
+        return {val,1};
+    }
+};

@@ -1,0 +1,24 @@
+// Question - https://leetcode.com/problems/find-duplicate-subtrees/
+// Answer in cpp
+
+
+
+class Solution {
+    map<string,vector<TreeNode*>> mp;
+    vector<TreeNode*> ans;
+public:
+    vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
+        dfs(root);
+        for(auto & m:mp) if(m.second.size()>1) ans.push_back(m.second[0]);
+        return ans;
+    }
+    string dfs(TreeNode* root){
+        if(!root) return "";
+        string temp = "";
+        temp += "("+dfs(root->left)+to_string(root->val);
+        temp += dfs(root -> right)+")";
+        mp[temp].push_back(root);
+        cout<<temp<<endl;
+        return temp;
+    }
+};

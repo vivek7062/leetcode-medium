@@ -1,0 +1,21 @@
+// Question - https://leetcode.com/problems/longest-zigzag-path-in-a-binary-tree/
+// Answer in cpp
+
+
+
+class Solution {
+    int ans = 0;
+public:
+    int longestZigZag(TreeNode* root) {
+        dfs(root->left,1,true);
+        dfs(root->right,1,false);
+        return ans;
+    }
+
+    void dfs(TreeNode* root,int count,bool isLeft){
+        if(!root) return;
+        ans=max(ans,count);
+        dfs(root->left,isLeft==false?count+1:1,true);
+        dfs(root->right,isLeft==true?count+1:1,false);
+    }
+};

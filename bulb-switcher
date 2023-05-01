@@ -1,0 +1,15 @@
+// Question - https://leetcode.com/problems/bulb-switcher/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int bulbSwitch(int n) {
+        int ans = 0;
+        for(int i=1;i<=n;i++){
+            int val = sqrt(i);
+            if(val*val==i) ans++;
+        }
+        return ans;
+    }
+};

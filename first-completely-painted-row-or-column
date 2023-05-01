@@ -1,0 +1,38 @@
+Question - https://leetcode.com/problems/first-completely-painted-row-or-column/
+Answer in cpp
+
+
+class Solution {
+public:
+    int firstCompleteIndex(vector<int>& arr, vector<vector<int>>& mat) {
+        int count = 0;
+       map<int,pair<int,int>> mp;
+       int row = mat.size(), col = mat[0].size();
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                mp[mat[i][j]] = {i,j};
+            }
+        }
+        map<int,int> row1,col1;
+        
+        for(auto& val:arr){
+            pair<int,int> pr = mp[val];
+            int temprow = pr.first,tempcol = pr.second;
+            row1[temprow]++;
+            col1[tempcol]++;
+             count++;
+            if(row1[temprow]==col){
+                return count-1;
+            }
+             if(col1[tempcol]==row){
+                return count-1;
+            }
+           
+            
+        }
+        
+        return -1;
+        
+    }
+};
+  

@@ -1,0 +1,32 @@
+// Question - https://leetcode.com/problems/maximum-number-of-fish-in-a-grid/
+
+
+class Solution {
+    int ans = 0,row,col;
+public:
+    int findMaxFish(vector<vector<int>>& grid) {
+        row = grid.size();
+        col = grid[0].size();
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]!=0){
+                    int count = 0;
+                    dfs(grid,i,j,count); 
+                    ans = max(ans,count);
+                }
+            }
+        }
+        
+        return ans;
+    }
+    
+    void dfs(vector<vector<int>>& grid,int i,int j,int &count){
+        if(i<0 || j<0 || i>=row || j>=col || grid[i][j]==0) return;
+        count+=grid[i][j];
+        grid[i][j] = 0;
+        dfs(grid,i+1,j,count);
+        dfs(grid,i-1,j,count);
+        dfs(grid,i,j+1,count);
+        dfs(grid,i,j-1,count);
+    }
+};

@@ -1,0 +1,52 @@
+// Question - https://leetcode.com/problems/multiply-strings/
+// Answer in cpp
+
+
+class Solution {
+public:
+    string multiply(string num1, string num2) {
+        string ans = "";
+        vector<vector<int>> vec;
+        int index = 0;
+        int maxLen = 0;
+        int len1 = num1.size(),len2 = num2.size();
+        for(int i=len2-1;i>=0;i--){
+            int carry = 0,mul=0;
+             int nums1 = num2[i]-'0';
+             vector<int> temp = vector(index,0);
+             vec.push_back(temp);
+             int size = index;
+            for(int j=len1-1;j>=0;j--){
+               int nums2 = num1[j]-'0';
+               mul = nums1*nums2;
+               mul+=carry;
+               carry = mul/10;
+               size++;
+               vec[index].insert(vec[index].begin(),mul%10);
+               if(j==0 && carry){
+                   vec[index].insert(vec[index].begin(),carry);
+                   size++;
+               }
+            }
+            maxLen = max(maxLen,size);
+           index++;
+        }
+        len1 = vec.size();
+        int carry = 0;
+        for(int i=0;i<maxLen;i++){
+            int val = carry;
+            for(int j=0;j<len1;j++){
+                int len = vec[j].size()-i-1;
+                if(len>=0){
+                    val+=vec[j][len];
+                }
+            }
+            carry = val/10;
+            ans = to_string(val%10)+ans;
+        }
+        if(carry){
+            ans = to_string(carry)+ans;
+        }
+        return ans[0]=='0'?"0":ans;
+    }
+};

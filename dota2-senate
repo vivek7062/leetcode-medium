@@ -1,0 +1,42 @@
+// Question - https://leetcode.com/problems/dota2-senate/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    string predictPartyVictory(string senate) {
+        string ans = "";
+        queue<int> qr,qd;
+        int i=0;
+        for(auto& ch:senate){
+            if(ch=='R'){
+                qr.push(i++);
+            }else {
+                qd.push(i++);
+            }
+        }
+        int flag = 0;
+        if(qr.size()==0) return "Dire";
+        if(qd.size()==0) return "Radiant";
+
+        while(!qr.empty() && !qd.empty()){
+            int a = qr.front(), b =qd.front();
+             qr.pop();
+             qd.pop();
+            if(a<b){
+                flag=0;
+                qr.push(i++);
+            }else{
+                flag=1;
+                qd.push(i++);
+            }
+        }
+        if(qr.size()==0 && qd.size()==0) {
+            if(flag==0) return "Radiant";
+            else return "Dire";
+        }
+
+        return qr.size()==0?"Dire":"Radiant";
+    }
+};

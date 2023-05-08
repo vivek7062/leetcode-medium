@@ -1,0 +1,41 @@
+// Question - https://leetcode.com/problems/number-of-adjacent-elements-with-the-same-color/
+// Answer in cpp
+
+
+
+class Solution {
+public:
+    vector<int> colorTheArray(int n, vector<vector<int>>& queries) {
+        int edge = 0;
+        vector<int> ans;
+        vector<int> vec(n,0);
+        for(int i=0;i<queries.size();i++){
+            int index = queries[i][0];
+            if(vec[index]==queries[i][1]) {
+                ans.push_back(edge);
+                continue;
+            }
+            if(vec[index]!=0){
+                if(index-1>=0 && vec[index]==vec[index-1]){
+                    edge--;
+                }
+                if(index+1<n && vec[index]==vec[index+1]){
+                    edge--;
+                }
+            }
+            
+            vec[index] = queries[i][1];
+            
+            if(index-1>=0 && vec[index]==vec[index-1]){
+                    edge++;
+                }
+                if(index+1<n && vec[index]==vec[index+1]){
+                    edge++;
+            }
+            ans.push_back(edge);
+            
+        }
+        
+        return ans;
+    }
+};

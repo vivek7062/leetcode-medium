@@ -1,0 +1,23 @@
+// Question - https://leetcode.com/problems/solving-questions-with-brainpower/
+// Answer in cpp
+
+
+
+class Solution {
+    int ans = 0;
+    vector<long long> dp;
+    int mod = 1e9+7;
+public:
+    long long mostPoints(vector<vector<int>>& questions) {
+        int curr = 0;
+        dp = vector(questions.size(),-1ll);
+        return dfs(questions,0,curr,questions.size());
+    }
+    long long dfs(vector<vector<int>>& questions,int index,int &curr,int row){
+        if(index>=row) return 0;
+        if(dp[index]!=-1) return dp[index];
+        long long first = questions[index][0]+dfs(questions,index+questions[index][1]+1,curr,row);
+        long long second = dfs(questions,index+1,curr,row);
+        return dp[index]=max(first,second);
+    }
+};  

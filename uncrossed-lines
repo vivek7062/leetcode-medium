@@ -1,0 +1,21 @@
+// Question - https://leetcode.com/problems/uncrossed-lines/
+// Answer in cpp
+
+
+class Solution {
+    vector<vector<int>> dp;
+public:
+    int maxUncrossedLines(vector<int>& nums1, vector<int>& nums2) {
+        int len1 = nums1.size(), len2 = nums2.size();
+        dp = vector(len1,vector(len2,-1));
+        return dfs(nums1,nums2,len1,len2,0,0);
+    }
+    int dfs(vector<int>& nums1, vector<int>& nums2, int& row1,int& row2,int i,int j){
+        if(i>=row1 || j>=row2 ) return 0;
+        if(dp[i][j]!=-1) return dp[i][j];
+        if(nums1[i]==nums2[j]){
+            return dp[i][j] = 1+dfs(nums1,nums2,row1,row2,i+1,j+1);
+        }
+        return dp[i][j] = max(dfs(nums1,nums2,row1,row2,i,j+1),dfs(nums1,nums2,row1,row2,i+1,j));   
+    }
+};    

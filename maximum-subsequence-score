@@ -1,0 +1,32 @@
+// Question - https://leetcode.com/problems/maximum-subsequence-score/
+// Answer in cpp
+
+
+class Solution {
+public:
+    long long maxScore(vector<int>& nums1, vector<int>& nums2, int k) {
+        vector<pair<int,int>> nums;
+        for(int i=0;i<nums1.size();i++){
+            nums.push_back({nums2[i],nums1[i]});
+        }
+        sort(nums.rbegin(),nums.rend());
+        priority_queue<int,vector<int>,greater<int>> pq;
+        long long sum = 0,ans = 0;
+        for(int i=0;i<k-1;i++){
+            pq.push(nums[i].second);
+            sum+=nums[i].second;
+        }
+        
+        for(int i=k-1;i<nums.size();i++){
+            sum+=nums[i].second;
+            ans = max(ans,sum*nums[i].first);
+            pq.push(nums[i].second);
+            sum-=pq.top();
+            pq.pop();
+        }
+         
+       
+
+        return ans;
+    }
+};

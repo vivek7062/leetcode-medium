@@ -1,0 +1,59 @@
+// Question - https://leetcode.com/problems/shortest-bridge/
+// Answer in cpp
+
+
+class Solution {
+    int ans = 0;
+    queue<pair<int,int>> que;
+    vector<vector<int>> visited;
+public:
+    int shortestBridge(vector<vector<int>>& grid) {
+        vector<vector<int>> dir = {{1,0},{-1,0},{0,1},{0,-1}};
+        int row = grid.size(), col = grid[0].size();
+        visited = vector(row,vector(col,0));
+        for(int i=0;i<row;i++){
+            int flag = 0;
+            for(int j=0;j<col;j++){
+                if(grid[i][j]==1){
+                    dfs(grid,i,j,row,col);
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag) break;
+        }
+        while(!que.empty()){
+            int len = que.size();
+            while(len--){
+                pair<int,int> pr = que.front();
+                que.pop();
+                int flag = 0;
+                int i = pr.first, j = pr.second;
+                for(int p=0;p<4;p++){
+                    int i1 = i+dir[p][0],j1=j+dir[p][1];
+                    if(i1>=0 && i1<row && j1>=0 && j1<col && !visited[i1][j1]){
+                        que.push({i1,j1});
+                        visited[i1][j1]=1;
+                        if(grid[i1][j1]==1){
+                            return ans;
+                        }
+                    }
+                }
+            }
+           
+            ans++;
+        }
+
+        return ans;
+    }
+    void dfs(vector<vector<int>>& grid, int i,int j,int &row,int &col){
+        if(i<0 || j<0 || i>=row || j>=col || grid[i][j]==0 || visited[i][j]) return ;
+        visited[i][j]=1;
+        que.push({i,j});
+        dfs(grid,i+1,j,row,col);
+        dfs(grid,i,j+1,row,col);
+        dfs(grid,i-1,j,row,col);
+        dfs(grid,i,j-1,row,col);
+    }
+
+};

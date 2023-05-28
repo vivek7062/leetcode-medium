@@ -1,0 +1,30 @@
+// Question - https://leetcode.com/problems/minimum-cost-to-make-all-characters-equal/
+// Answer in cpp
+
+
+class Solution {
+public:
+    long long minimumCost(string s) {
+        return min(countCost(s,'1'),countCost(s,'0'));      
+    }
+
+    long long countCost(string& s,char ch){
+        long long sum = 0;
+        int n = s.size();
+        char c= ch;
+        for(int i=n/2;i>=0;i--){
+            if(s[i]==c){
+                sum+=(i+1);
+                c = c=='1'?'0':'1';
+            }
+        }
+        c = ch;
+        for(int i=n/2+1;i<n;i++){
+            if(s[i]==c){
+                sum+=(n-i);
+                c = c=='1'?'0':'1';
+            }
+        }
+        return sum;
+    }
+};

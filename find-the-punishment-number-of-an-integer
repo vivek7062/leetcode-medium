@@ -1,0 +1,36 @@
+// Question - https://leetcode.com/problems/find-the-punishment-number-of-an-integer/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int punishmentNumber(int n) {
+        int punishment = 0;
+        
+        for (int i = 1; i <= n; i++) {
+            bool flag=false;
+            int square = i * i;
+            string str = to_string(square);
+            checkConditions(0,i,0,0,str,flag);
+            if (flag) {
+                punishment += square;
+            }
+        }
+        
+        return punishment;
+    }
+    void checkConditions(int index,int& val,int sum,int total, string &str, bool& flag){
+        if(index==str.size() && (sum+total==val)){
+             flag = true;
+             return;
+        }
+        if(index>=str.size() || flag) return;
+        int curr = int(str[index])-48;
+        int temp = sum*10+curr;
+        checkConditions(index+1,val,temp,total,str,flag);
+        total+=sum;
+        sum = curr;
+        checkConditions(index+1,val,sum,total,str,flag);
+    }
+    
+};

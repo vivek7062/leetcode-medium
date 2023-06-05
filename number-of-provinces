@@ -1,0 +1,36 @@
+// Question - https://leetcode.com/problems/number-of-provinces/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int ans =0;
+        int len = isConnected.size();
+        vector<vector<int>> vec(len);
+        vector<int> visited(len,0);
+        for(int i=0;i<len;i++){
+            for(int j=0;j<isConnected[i].size();j++){
+                if(i!=j && isConnected[i][j]==1){
+                    vec[i].push_back(j);
+                }
+            }
+        }
+        for(int i=0;i<vec.size();i++){
+            if(!visited[i]){
+                ans++;
+                dfs(visited,vec,i);
+            }
+        }
+        return ans;
+    }
+    void dfs(vector<int> &visited,vector<vector<int>> &vec, int node){
+        if(visited[node]) return;
+        visited[node] = 1;
+        for(int i=0;i<vec[node].size();i++){
+            if(!visited[vec[node][i]]){
+            dfs(visited,vec,vec[node][i]);
+            }
+        }
+    }
+};

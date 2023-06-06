@@ -1,0 +1,28 @@
+// Question - https://leetcode.com/problems/sum-of-matrix-after-queries/
+// Answer in cpp
+
+
+class Solution {
+public:
+    long long matrixSumQueries(int n, vector<vector<int>>& queries) {
+        set<int> r,c;
+        long long ans = 0ll;
+        reverse(queries.begin(),queries.end());
+        for(auto& que:queries){
+            int type = que[0], index = que[1], val = que[2];
+            if(type==0){
+                if(r.find(index)==r.end()){
+                    ans+=(n-c.size())*val;
+                    r.insert(index);
+                }
+            }else{
+                if(c.find(index)==c.end()){
+                    ans+=(n-r.size())*val;
+                    c.insert(index);
+                }
+            }
+        }
+
+        return ans;
+    }
+};

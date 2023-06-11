@@ -1,0 +1,29 @@
+// Question - https://leetcode.com/problems/lexicographically-smallest-string-after-substring-operation/
+// Answer in cpp
+
+
+class Solution {
+public:
+    string smallestString(string s) {
+        int len = s.size();
+        int index = -1;
+        for(int i=0;i<len;i++){
+            if(s[i]!='a'){
+                index = i;
+                break;
+            }
+        }
+
+        if(index==-1){
+            s[len-1] = 'z';
+            return s;
+        }
+        for(int i=index;i<len;i++){
+            if(s[i]!='a'){
+                s[i]--;
+            }else break;
+        }
+        
+        return s;
+    }
+};

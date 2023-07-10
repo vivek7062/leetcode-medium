@@ -1,0 +1,50 @@
+// Question - https://leetcode.com/problems/partition-string-into-minimum-beautiful-substrings/
+// Answer in cpp
+
+class Solution {
+    int ans = INT_MAX;
+public:
+    int minimumBeautifulSubstrings(string s) {
+        dfs(s,0,0);
+        return ans==INT_MAX?-1:ans;
+    }
+    void dfs(string& s,int count,int index){
+        if(index==s.size()){
+            ans = min(ans,count);
+            return;
+        }
+        string str="";
+        for(int i=index;i<s.size();i++){
+            str+=s[i];
+            if(i<s.size()-1 && s[i+1]=='0' || str[0]=='0') continue;
+            int num = binaryToDecimal(str);
+            if(isPower(5,num)){
+                dfs(s,count+1,i+1);
+            }
+        }
+    }
+    int binaryToDecimal(string& s)
+    {
+        int i,N,decimal_number=0,p=0;
+        N=s.size(); 
+        for(i=N-1;i>=0;i--) 
+        {
+            if(s[i]=='1') 
+            {
+                decimal_number+=pow(2,p); 
+            }
+            p++; 
+        }
+        return decimal_number;
+    }
+    bool isPower(int x,  int y)
+    {
+        if (x == 1)
+            return (y == 1);
+    
+        long int pow = 1;
+        while (pow < y)
+            pow *= x;
+        return (pow == y);
+    }
+};

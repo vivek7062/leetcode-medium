@@ -1,0 +1,58 @@
+// Question - https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        vector<int> ans;
+        unordered_map<TreeNode*,TreeNode*> parent;
+        findParent(root,parent);
+        unordered_map<TreeNode*,bool> visited;
+        queue<TreeNode*> que;
+        que.push(target);
+        visited[target] = true;
+        int count = 0;
+        while(!que.empty()){
+            int size = que.size();
+            if(count++ == k) break;
+            for(int i=0;i<size;i++){
+                TreeNode* node = que.front();
+                que.pop();
+                if(parent[node] && !visited[parent[node]]){
+                    que.push(parent[node]);
+                    visited[parent[node]] = true;
+                }
+                if(node->left && !visited[node->left]){
+                    que.push(node->left);
+                    visited[node->left] = true;
+                }
+                if(node->right && !visited[node->right]){
+                    que.push(node->right);
+                    visited[node->right] = true;
+                }
+            }
+        }
+        while(!que.empty()){
+            ans.push_back(que.front()->val);
+            que.pop();
+        }
+        return ans;
+    }
+    void findParent(TreeNode* root, unordered_map<TreeNode*,TreeNode*>& parent){
+        queue<TreeNode*> que;
+        que.push(root);
+        while(!que.empty()){
+            TreeNode* papa = que.front();
+            que.pop();
+            if(papa->left){
+                parent[papa->left] = papa;
+                que.push(papa->left);
+            }
+            if(papa->right){
+                parent[papa->right] = papa;
+                que.push(papa->right);
+            }
+        }
+    }
+};

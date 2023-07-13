@@ -1,0 +1,24 @@
+// Question - https://leetcode.com/problems/collecting-chocolates/
+// Answer in cpp
+
+
+class Solution {
+public:
+    long long minCost(vector<int>& nums, int x) {
+        long long ans = accumulate(nums.begin(),nums.end(),0ll);
+        int len = nums.size();
+        long long count=1;
+        vector<int> minVal(nums.begin(),nums.end());
+        for(int i=0;i<len-1;i++){
+            int last = nums[len-1];
+            nums.pop_back();
+            nums.insert(nums.begin(),last);
+            for(int i=0;i<len;i++) minVal[i] = min(minVal[i],nums[i]);
+            long long sum =(count*x)+accumulate(minVal.begin(),minVal.end(),0ll);
+            if(sum<ans) ans = sum;
+            count++;
+        }
+
+        return ans;
+    }
+};

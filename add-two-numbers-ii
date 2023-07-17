@@ -1,0 +1,55 @@
+// Question - https://leetcode.com/problems/add-two-numbers-ii/
+// Answer in cpp
+
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* node = new ListNode(0);
+        stack<ListNode*> st1,st2,st3;
+        while(l1){
+            st1.push(l1);
+            l1=l1->next;
+        }
+        while(l2){
+            st2.push(l2);
+            l2=l2->next;
+        }
+        int sum = 0;
+        while(st1.size()>0 && st2.size()>0){
+            sum+=st1.top()->val+st2.top()->val;
+            st1.pop();
+            st2.pop();
+            ListNode* node = new ListNode(sum%10);
+            sum/=10;
+            st3.push(node);
+        }
+        while(st1.size()>0){
+             sum+=st1.top()->val;
+            st1.pop();
+            ListNode* node = new ListNode(sum%10);
+            sum/=10;
+            st3.push(node);
+        }
+        while(st2.size()>0){
+             sum+=st2.top()->val;
+            st2.pop();
+            ListNode* node = new ListNode(sum%10);
+            sum/=10;
+            st3.push(node);
+        }
+        while(sum){
+            ListNode* node = new ListNode(sum%10);
+            sum/=10;
+            st3.push(node);
+        }
+        ListNode* temp = node;
+        while(st3.size()>0){
+            temp->next = st3.top();
+            st3.pop();
+            temp = temp->next;
+        }
+
+        return node->next;
+    }
+};

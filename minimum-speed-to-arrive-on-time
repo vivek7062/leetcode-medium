@@ -1,0 +1,28 @@
+// Question - https://leetcode.com/problems/minimum-speed-to-arrive-on-time/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int minSpeedOnTime(vector<int>& dist, double hour) {
+        int minVal = 1, maxVal = 1e7,ans = -1;
+        while(minVal<=maxVal){
+            int mid = minVal+(maxVal-minVal)/2;
+            if(isPossible(dist,mid,hour)){
+                maxVal = mid-1;
+                ans = mid;
+            }else{
+                minVal = mid+1; 
+            }
+        }
+        return ans;
+    }
+    bool isPossible(vector<int>& dist,int& mid,double& hour){
+        double sum = 0.0;
+        int len = dist.size();
+        for(int i=0;i<len;i++){
+            sum+=i<len-1?ceil(dist[i]/(double)mid):(dist[i]/(double)mid);
+        }
+        return sum<=hour;
+    }
+};

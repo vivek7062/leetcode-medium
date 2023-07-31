@@ -1,0 +1,26 @@
+// Question - https://leetcode.com/problems/all-possible-full-binary-trees/
+// Answer in cpp
+
+
+class Solution {
+    map<int,vector<TreeNode*>> mp;
+public:
+    vector<TreeNode*> allPossibleFBT(int n) {
+       if(n%2==0) return {};
+       if(n==1) return {new TreeNode(0)};
+       if(mp.find(n)!=mp.end()) return mp[n];
+        vector<TreeNode*> ans;
+       for(int i=1;i<n;i++){
+           vector<TreeNode*> left = allPossibleFBT(i);
+           vector<TreeNode*> right = allPossibleFBT(n-i-1);
+           for(TreeNode* l: left){
+               for(TreeNode* r : right){
+                   ans.push_back(new TreeNode(0,l,r));
+               }
+           }
+       }
+
+       return mp[n] = ans;
+    }
+   
+};

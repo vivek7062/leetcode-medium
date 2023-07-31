@@ -1,0 +1,35 @@
+// Question - https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/
+// Answer in cpp
+
+
+class Solution {
+    vector<vector<int>> dp;
+public:
+    int minimumDeleteSum(string s1, string s2) {
+        int len1 = s1.size(), len2 = s2.size();
+        dp = vector(len1,vector(len2,-1));
+        return dfs(len1-1,len2-1,s1,s2);
+    }
+    int dfs(int i, int j, string& s1, string& s2){
+        if(i<0 || j<0){
+            int sum = 0;
+            while(i>=0){
+                sum += (int)s1[i--];
+            }
+            while(j>=0){
+                sum += (int)s2[j--];
+            }
+            return sum;
+        }
+        if(dp[i][j]!=-1) return dp[i][j];
+        int x = INT_MAX,y=INT_MAX;
+        if(s1[i]==s2[j]){
+            x = dfs(i-1,j-1,s1,s2);
+        }else{
+            y = min((int)s1[i]+dfs(i-1,j,s1,s2),(int)s2[j]+dfs(i,j-1,s1,s2));
+        }
+
+        return dp[i][j] = min(x,y);
+    }
+    
+};

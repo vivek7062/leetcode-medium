@@ -1,0 +1,84 @@
+// Question - https://leetcode.com/problems/find-the-safest-path-in-a-grid/
+// Answer in cpp
+
+
+class Solution {
+    priority_queue<int> pq;
+public:
+    int maximumSafenessFactor(vector<vector<int>>& grid) {
+        int ans = 0;
+        vector<vector<int>> dir = {{0,1},{1,0},{0,-1},{-1,0}};
+        int row = grid.size();
+         vector<vector<bool>> visited(row,vector(row,false));
+        vector<vector<int>> safeness;
+        queue<pair<int,int>> que;
+        for(int i=0;i<row;i++){
+            vector<int> temp;
+            for(int j=0;j<row;j++){
+                if(grid[i][j]==1) {
+                    que.push({i,j});
+                    visited[i][j] = true;
+                    temp.push_back(0);
+                }
+                else temp.push_back(INT_MAX);
+            }
+            safeness.push_back(temp);
+        }
+        int start = 0, end = 0;
+        while(!que.empty()){
+            int i = que.front().first;
+            int j = que.front().second;
+            int dis = safeness[i][j];
+            que.pop();
+            for(int t=0;t<dir.size();t++){
+                int newI = i+dir[t][0];
+                int newJ = j+dir[t][1];
+                if(newI<0 || newJ<0 || newI>=row || newJ>=row) continue;
+                if(!visited[newI][newJ] && safeness[newI][newJ]>safeness[i][j]){
+                    safeness[newI][newJ] = dis+1;
+                    end = max(end,dis+1);
+                    que.push({newI,newJ});
+                    visited[newI][newJ] = true;
+                }
+            }
+        }
+        while(start<=end){
+            int mid  = start+(end-start)/2;
+            if(isPossible(mid,safeness)){
+                ans = mid;
+                start = mid+1;
+            }else{
+                end = mid-1;
+            }
+        }
+        
+        return ans;
+    }
+
+    bool isPossible(int target, vector<vector<int>> dist){
+        if(dist[0][0]<target) return false;
+        queue<pair<int,int>> que;
+        vector<vector<int>> dir = {{0,1},{1,0},{0,-1},{-1,0}};
+        int row = dist.size();
+        vector<vector<bool>> visited(row,vector(row,false));
+        que.push({0,0});
+        visited[0][0] = true;
+        while(!que.empty()){
+            int i = que.front().first, j = que.front().second;
+            que.pop();
+            for(int t=0;t<dir.size();t++){
+                int newI = i+dir[t][0];
+                int newJ = j+dir[t][1];
+                if(newI<0 || newJ<0 || newI>=row || newJ>=row) continue;
+                if(!visited[newI][newJ] && dist[newI][newJ]>=target){
+                    visited[newI][newJ] = true;
+                    que.push({newI,newJ});
+                    if(newI==row-1 && newJ==row-1) return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    
+};

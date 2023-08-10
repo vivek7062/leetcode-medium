@@ -1,0 +1,33 @@
+// Question - https://leetcode.com/problems/minimize-the-maximum-difference-of-pairs/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int minimizeMax(vector<int>& nums, int p) {
+        sort(nums.begin(),nums.end());
+        int ans=0;
+        int min = 0, max = nums[nums.size()-1]-nums[0];
+        while(min<=max){
+            int mid  = min + (max-min)/2;
+            if(isPossible(nums,p,mid)){
+                ans = mid;
+                max = mid-1;
+            }else{
+                min = mid+1;
+            }
+        }
+        
+        return ans;
+    }
+
+    bool isPossible(vector<int>& nums,int p, int& diff){
+        for(int i=1;i<nums.size();i++){
+            if(nums[i]-nums[i-1]<=diff){
+                p--;
+                i++;
+            }
+        }
+        return p<=0;
+    }
+};

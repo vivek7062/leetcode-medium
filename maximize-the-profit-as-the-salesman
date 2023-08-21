@@ -1,0 +1,36 @@
+// Question - https://leetcode.com/problems/maximize-the-profit-as-the-salesman/
+// Answer in cpp
+
+
+class Solution {
+    vector<int> dp;
+    public:
+    int maximizeTheProfit(int n, vector<vector<int>>& offers) {
+        dp = vector(offers.size()+1,-1);
+        sort(offers.begin(),offers.end());
+        return dfs(0,offers.size(),offers);
+    }
+    int dfs(int index, int len, vector<vector<int>>& offers){
+        if(index>=len || index<0) return 0;
+        if(dp[index]!=-1) return dp[index];
+        int ans = findMax(offers,offers[index][1]);
+        int a = offers[index][2]+dfs(ans,len,offers);
+        int b = dfs(index+1,len,offers);
+
+        return dp[index] = max(a,b);
+    }
+    int findMax( vector<vector<int>>& offers, int x){
+        int ans = -1;
+        int left = 0, right = offers.size()-1;
+        while(left<=right){
+            int mid = left+(right-left)/2;
+            if(offers[mid][0]>x){
+                ans = mid;
+                right = mid-1;
+            } else{
+                left = mid+1;
+            }
+        }
+        return ans;
+    }
+};

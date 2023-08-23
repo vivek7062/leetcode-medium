@@ -1,0 +1,44 @@
+// Question - https://leetcode.com/problems/reorganize-string/
+// Answer in cpp
+
+
+class Solution {
+public:
+    string reorganizeString(string s) {
+        string ans = "";
+        map<char,int> mp;
+        priority_queue<pair<int,int>> pq;
+        for(auto& c:s) mp[c]++;
+        for(auto& m:mp){
+            pq.push({m.second,m.first-'a'});
+        }
+        while(pq.size()>1){
+            pair<int,int> top = pq.top();
+            pq.pop();
+            pair<int,int> stop = pq.top();
+            pq.pop();
+            ans+=top.second+'a';
+            ans+=stop.second+'a';
+            top.first--;
+            stop.first--;
+            if(top.first){
+                pq.push(top);
+            }
+            if(stop.first){
+                pq.push(stop);
+            }
+        }
+        if(ans==""){
+            if(pq.top().first>1) return "";
+             ans+=pq.top().second+'a';
+             return ans;
+        }else{
+            if(pq.size()>0){
+                if(pq.top().first>1 || (ans[ans.size()-1]==pq.top().second+'a')) return "";
+                ans+=pq.top().second+'a';
+                return ans;
+            }
+        }
+        return ans;
+    }
+};

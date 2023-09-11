@@ -1,0 +1,25 @@
+// question - https://leetcode.com/problems/group-the-people-given-the-group-size-they-belong-to/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<vector<int>> groupThePeople(vector<int>& groupSizes) {
+        vector<vector<int>> ans;
+        map<int,vector<vector<int>>> mp;
+        for(int i=0;i<groupSizes.size();i++){
+            int val = groupSizes[i];
+            if(mp.find(val)==mp.end()){
+                mp[val].push_back({i});
+            }else{
+                int len = mp[val].size();
+                if(mp[val][len-1].size()<val)  mp[val][len-1].push_back(i);
+                else mp[val].push_back({i});
+            }
+        }
+        for(auto& group:mp){
+            ans.insert(ans.end(),group.second.begin(),group.second.end());
+        }
+        return ans;
+    }
+};

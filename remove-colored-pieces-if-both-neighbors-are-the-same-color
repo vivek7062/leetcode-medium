@@ -1,0 +1,27 @@
+// Question - https://leetcode.com/problems/remove-colored-pieces-if-both-neighbors-are-the-same-color/
+// Answer in cpp
+
+
+class Solution {
+public:
+    bool winnerOfGame(string colors) {
+        int bob = 0, alice = 0;
+        int flaga = 0, flagb = 0;
+        for(auto& color:colors){
+            if(color=='A'){
+                flaga++;
+                if(flagb>2) bob+=(flagb-2);
+                flagb = 0;
+            }else{
+                flagb++;
+                if(flaga>2) alice+=(flaga-2);
+                flaga = 0;
+            }
+        }
+        
+        if(flaga>2) alice+=(flaga-2);
+        if(flagb>2) bob+=(flagb-2);
+
+        return alice>bob;
+    }
+};

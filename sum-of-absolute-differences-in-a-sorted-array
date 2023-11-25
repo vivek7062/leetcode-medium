@@ -1,0 +1,31 @@
+// Question - https://leetcode.com/problems/sum-of-absolute-differences-in-a-sorted-array/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<int> getSumAbsoluteDifferences(vector<int>& nums) {
+        vector<int> ans;
+        vector<long long int> vec;
+        int n = nums.size();
+        vec.push_back(nums[0]*1ll);
+        for(int i=1;i<nums.size();i++){
+            vec.push_back(vec[i-1]+(nums[i]*1ll));
+        }
+        for(int i=0;i<vec.size();i++){
+            long long int temp = 0ll;
+            int prev = i-1, next = i+1;
+            int len = n-next;
+            if(prev>=0){
+                temp = (nums[i]*1ll*((prev+1)*1ll));
+                temp-=vec[prev];
+            }
+            if(next<n){
+                temp -=(nums[i]*1ll*(len*1ll));
+                temp +=(vec[n-1]-vec[next-1]);
+            }
+            ans.push_back(temp);
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,24 @@
+// Question - https://leetcode.com/problems/diagonal-traverse-ii/
+// Answer in cpp
+
+
+class Solution {
+public:
+    vector<int> findDiagonalOrder(vector<vector<int>>& nums) {
+        vector<int> ans;
+        queue<pair<int,int>> que;
+        que.push({0,0});
+        while(!que.empty()){
+            int len = que.size();
+            while(len--){
+                pair<int,int> pr = que.front();
+                que.pop();
+                int i = pr.first, j = pr.second;
+                ans.push_back(nums[i][j]);
+                if(j==0 && i+1<nums.size()) que.push({i+1,j});
+                if(j+1<nums[i].size()) que.push({i,j+1});
+            }
+        }
+        return ans;
+    }
+};

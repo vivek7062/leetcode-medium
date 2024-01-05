@@ -1,0 +1,17 @@
+// Question - https://leetcode.com/problems/number-of-laser-beams-in-a-bank/
+// Answer in cpp
+
+
+class Solution {
+public:
+    int numberOfBeams(vector<string>& bank) {
+        int ans = 0, prev = 0;
+        for(auto & st:bank){
+            int count = 0;
+            for(auto& c:st) if(c=='1') count++;
+            ans += (count*prev);
+            if(count)  prev = count;
+        }
+        return ans;
+    }
+};
